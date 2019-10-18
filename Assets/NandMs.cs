@@ -14,6 +14,9 @@ public class NandMs : MonoBehaviour
 		int moduleId;
 		private bool moduleSolved;
     public String[] allWords;
+    public Color[] textColors;
+    public KMSelectable[] buttons;
+    public TextMesh[] buttonWords;
 
     public String[] row1;
     public String[] row2;
@@ -30,11 +33,29 @@ public class NandMs : MonoBehaviour
 		void Awake()
 		{
         moduleId = moduleIdCounter++;
+        foreach (KMSelectable button in buttons)
+        {
+          button.OnInteract += delegate () { buttonPress(button); return false; };
+        }
 		}
 
 		void Start ()
 		{
-
+      pickWords();
 		}
+
+    void buttonPress(KMSelectable button)
+    {
+
+    }
+
+    void pickWords()
+    {
+      for(int i = 0; i <= 4; i++)
+      {
+        int colorIndex = UnityEngine.Random.Range(0,6);
+        buttonWords[i].color = textColors[colorIndex];
+      }
+    }
 
 }
