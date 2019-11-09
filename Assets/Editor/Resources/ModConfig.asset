@@ -14,7 +14,12 @@ MonoBehaviour:
   id: NandMs
   title: N&Ms
   author: TasThing
-  description: 
+  description: 'Mama: "No nom-nom!" Nana: "Mama no man?"
+
+
+    Module idea by Pruz, implemented by TasThing.
+
+    Comes with Twitch Plays and ruleseed support, thanks to Timwi.'
   version: 
   outputFolder: build
-  previewImage: {fileID: 0}
+  previewImage: {fileID: 2800000, guid: b87b92a62a83d4a4cb31c58b1340af4a, type: 3}
