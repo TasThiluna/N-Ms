@@ -33,9 +33,7 @@ public class NandMs : MonoBehaviour
     {
         moduleId = moduleIdCounter++;
         foreach (KMSelectable button in buttons)
-        {
             button.OnInteract += delegate () { buttonPress(button); return false; };
-        }
 
         var rnd = ruleSeedable.GetRNG();
         var allStrings = new List<string>();
@@ -75,9 +73,7 @@ public class NandMs : MonoBehaviour
         Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, button.transform);
         button.AddInteractionPunch(.5f);
         if (moduleSolved || recalcing)
-        {
             return;
-        }
         if (otherWords[otherwordindex] != button.GetComponentInChildren<TextMesh>().text)
         {
             GetComponent<KMBombModule>().HandleStrike();
@@ -119,13 +115,9 @@ public class NandMs : MonoBehaviour
                 buttonWords[i].color = textColors[colorIndex];
                 int ix = decidedButtons.IndexOf(i);
                 if (ix == -1)
-                {
                     buttonWords[i].text = otherWords[otherwordindex];
-                }
                 else
-                {
                     buttonWords[i].text = sets[setIndex][decidedWords[ix]];
-                }
                 yield return new WaitForSeconds(.3f);
             }
         }
