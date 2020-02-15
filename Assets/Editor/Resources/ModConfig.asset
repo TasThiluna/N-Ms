@@ -14,12 +14,10 @@ MonoBehaviour:
   id: NandMs
   title: N&Ms
   author: TasThing
-  description: 'Mama: "No nom-nom!" Nana: "Mama no man?"
-
-
-    Module idea by Pruz, implemented by TasThing.
-
-    Comes with Twitch Plays and ruleseed support, thanks to Timwi.'
+  description: "Mama: \"No nom-nom!\" Nana: \"Mama no man?\"\r\n\r\nModule idea by
+    Pruz, implemented by TasThing.\r\nComes with Twitch Plays and ruleseed support,
+    thanks to Timwi.\r\n\r\nManual HTML: https://ktane.timwi.de/HTML/N%26Ms.html\r\nManual
+    PDF: https://ktane.timwi.de/PDF/N%26Ms.pdf"
   version: 
   outputFolder: build
   previewImage: {fileID: 2800000, guid: b87b92a62a83d4a4cb31c58b1340af4a, type: 3}
