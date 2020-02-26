@@ -8,7 +8,7 @@ using System.Text.RegularExpressions;
 
 public class NandMs : MonoBehaviour
 {
-    public KMAudio Audio;
+    public new KMAudio audio;
     public KMBombInfo bomb;
     public KMRuleSeedable ruleSeedable;
 
@@ -70,7 +70,7 @@ public class NandMs : MonoBehaviour
 
     void buttonPress(KMSelectable button)
     {
-        Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, button.transform);
+        audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, button.transform);
         button.AddInteractionPunch(.5f);
         if (moduleSolved || recalcing)
             return;
@@ -83,7 +83,7 @@ public class NandMs : MonoBehaviour
         else
         {
             GetComponent<KMBombModule>().HandlePass();
-            Audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.CorrectChime, transform);
+            audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.CorrectChime, transform);
             Debug.LogFormat("[N&Ms #{0}] Module solved.", moduleId);
             moduleSolved = true;
             StartCoroutine(showWords());
@@ -124,6 +124,7 @@ public class NandMs : MonoBehaviour
         recalcing = false;
     }
 
+    // Twitch Plays
 #pragma warning disable 414
     private readonly string TwitchHelpMessage = @"!{0} press 1/2/3/4/5 [presses the button in that position from top to bottom]";
 #pragma warning restore 414

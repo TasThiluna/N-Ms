@@ -1410,7 +1410,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1515405f464824d4587732539a179687, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Audio: {fileID: 114659359768305904}
+  audio: {fileID: 114659359768305904}
   bomb: {fileID: 114154092435650982}
   ruleSeedable: {fileID: 114309945031191060}
   textColors:
