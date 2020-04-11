@@ -140,6 +140,11 @@ public class NandMs : MonoBehaviour
     IEnumerator TwitchHandleForcedSolve()
     {
         buttons.First(x => x.GetComponentInChildren<TextMesh>().text == otherWords[otherwordindex]).OnInteract();
+        while (recalcing)
+        {
+            yield return true;
+            yield return new WaitForSeconds(.1f);
+        }
         yield return true;
     }
 }
