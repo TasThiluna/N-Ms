@@ -33,7 +33,7 @@ public class NandMs : MonoBehaviour
     {
         moduleId = moduleIdCounter++;
         foreach (KMSelectable button in buttons)
-            button.OnInteract += delegate () { buttonPress(button); return false; };
+            button.OnInteract += delegate () { ButtonPress(button); return false; };
 
         var rnd = ruleSeedable.GetRNG();
         var allStrings = new List<string>();
@@ -65,10 +65,10 @@ public class NandMs : MonoBehaviour
         setIndex = UnityEngine.Random.Range(0, 10);
         otherwordindex = UnityEngine.Random.Range(0, 20);
         otherWords = allWords.Except(sets[setIndex]).ToArray();
-        pickWords();
+        PickWords();
     }
 
-    void buttonPress(KMSelectable button)
+    void ButtonPress(KMSelectable button)
     {
         audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, button.transform);
         button.AddInteractionPunch(.5f);
@@ -86,19 +86,19 @@ public class NandMs : MonoBehaviour
             audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.CorrectChime, transform);
             Debug.LogFormat("[N&Ms #{0}] Module solved.", moduleId);
             moduleSolved = true;
-            StartCoroutine(showWords());
+            StartCoroutine(ShowWords());
         }
     }
 
-    void pickWords()
+    void PickWords()
     {
         decidedButtons = Enumerable.Range(0, 5).ToList().Shuffle().Take(4).ToList();
         decidedWords = Enumerable.Range(0, 5).ToList().Shuffle().Take(4).ToList();
         Debug.LogFormat("[N&Ms #{0}] The correct word to press is {1}.", moduleId, otherWords[otherwordindex]);
-        StartCoroutine(showWords());
+        StartCoroutine(ShowWords());
     }
 
-    IEnumerator showWords()
+    IEnumerator ShowWords()
     {
         recalcing = true;
         for (int i = 0; i <= 4; i++)
@@ -125,9 +125,9 @@ public class NandMs : MonoBehaviour
     }
 
     // Twitch Plays
-#pragma warning disable 414
+    #pragma warning disable 414
     private readonly string TwitchHelpMessage = @"!{0} press 1/2/3/4/5 [presses the button in that position from top to bottom]";
-#pragma warning restore 414
+    #pragma warning restore 414
 
     KMSelectable[] ProcessTwitchCommand(string command)
     {
@@ -135,5 +135,11 @@ public class NandMs : MonoBehaviour
         if ((m = Regex.Match(command, @"^\s*(?:press\s+)?([1-5])$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)).Success)
             return new[] { buttons[int.Parse(m.Groups[1].Value) - 1] };
         return null;
+    }
+
+    IEnumerator TwitchHandleForcedSolve()
+    {
+        buttons.First(x => x.GetComponentInChildren<TextMesh>().text == otherWords[otherwordindex]).OnInteract();
+        yield return true;
     }
 }
