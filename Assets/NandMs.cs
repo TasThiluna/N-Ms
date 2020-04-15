@@ -145,6 +145,5 @@ public class NandMs : MonoBehaviour
             yield return true;
             yield return new WaitForSeconds(.1f);
         }
-        yield return true;
     }
 }
