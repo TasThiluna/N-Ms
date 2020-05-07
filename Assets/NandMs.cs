@@ -35,7 +35,7 @@ public class NandMs : MonoBehaviour
         moduleId = moduleIdCounter++;
         foreach (KMSelectable button in buttons)
             button.OnInteract += delegate () { ButtonPress(button); return false; };
-        module.OnActivate += delegate () { recalcing = false; };
+        module.OnActivate += delegate () { Activate(); };
 
         var rnd = ruleSeedable.GetRNG();
         var allStrings = new List<string>();
@@ -62,8 +62,9 @@ public class NandMs : MonoBehaviour
         allWords = allStrings.Take(25).ToArray();
     }
 
-    void Start()
+    void Activate()
     {
+        recalcing = false;
         setIndex = UnityEngine.Random.Range(0, 10);
         otherwordindex = UnityEngine.Random.Range(0, 20);
         otherWords = allWords.Except(sets[setIndex]).ToArray();
@@ -80,7 +81,7 @@ public class NandMs : MonoBehaviour
         {
             module.HandleStrike();
             Debug.LogFormat("[N&Ms #{0}] You pressed {1}. Strike! Resetting...", moduleId, button.GetComponentInChildren<TextMesh>().text);
-            Start();
+            Activate();
         }
         else
         {
