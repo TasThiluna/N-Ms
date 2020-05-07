@@ -351,8 +351,7 @@ GameObject:
   - component: {fileID: 114377869487060660}
   - component: {fileID: 114068121071749754}
   - component: {fileID: 114009362775010420}
-  - component: {fileID: 114761453671254284}
-  - component: {fileID: 114386243140647760}
+  - component: {fileID: 114309055955397862}
   m_Layer: 0
   m_Name: MandMs
   m_TagString: Untagged
@@ -432,7 +431,7 @@ Transform:
   m_GameObject: {fileID: 1796479964908724}
   m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
   m_LocalPosition: {x: -0.0007, y: 0.0008, z: 0.006}
-  m_LocalScale: {x: 0.008, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.0015, y: 0.002, z: 0.001}
   m_Children: []
   m_Father: {fileID: 4170039381119296}
   m_RootOrder: 1
@@ -512,7 +511,7 @@ Transform:
   m_GameObject: {fileID: 1793970661549936}
   m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
   m_LocalPosition: {x: -0.0007, y: 0.0008, z: 0.006}
-  m_LocalScale: {x: 0.008, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.0015, y: 0.002, z: 0.001}
   m_Children: []
   m_Father: {fileID: 4880860545624180}
   m_RootOrder: 1
@@ -598,7 +597,7 @@ Transform:
   m_GameObject: {fileID: 1639459230355164}
   m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
   m_LocalPosition: {x: -0.0007, y: 0.0008, z: 0.006}
-  m_LocalScale: {x: 0.008, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.0015, y: 0.002, z: 0.001}
   m_Children: []
   m_Father: {fileID: 4961669345491522}
   m_RootOrder: 1
@@ -611,7 +610,7 @@ Transform:
   m_GameObject: {fileID: 1009750308517882}
   m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
   m_LocalPosition: {x: -0.0007, y: 0.0008, z: 0.006}
-  m_LocalScale: {x: 0.008, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.0015, y: 0.002, z: 0.001}
   m_Children: []
   m_Father: {fileID: 4409644809844356}
   m_RootOrder: 1
@@ -642,7 +641,7 @@ Transform:
   m_GameObject: {fileID: 1565916101141154}
   m_LocalRotation: {x: 1, y: 0, z: 0, w: 0}
   m_LocalPosition: {x: -0.0007, y: 0.0008, z: 0.006}
-  m_LocalScale: {x: 0.008, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.0015, y: 0.002, z: 0.001}
   m_Children: []
   m_Father: {fileID: 4359517097038232}
   m_RootOrder: 1
@@ -1177,7 +1176,7 @@ TextMesh:
   m_Anchor: 4
   m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 0
+  m_FontSize: 80
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: f2022b6627ad798409ee851b16727cc6, type: 3}
@@ -1198,7 +1197,7 @@ TextMesh:
   m_Anchor: 4
   m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 0
+  m_FontSize: 80
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: f2022b6627ad798409ee851b16727cc6, type: 3}
@@ -1219,7 +1218,7 @@ TextMesh:
   m_Anchor: 4
   m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 0
+  m_FontSize: 80
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: f2022b6627ad798409ee851b16727cc6, type: 3}
@@ -1240,7 +1239,7 @@ TextMesh:
   m_Anchor: 4
   m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 0
+  m_FontSize: 80
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: f2022b6627ad798409ee851b16727cc6, type: 3}
@@ -1261,7 +1260,7 @@ TextMesh:
   m_Anchor: 4
   m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 0
+  m_FontSize: 80
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: f2022b6627ad798409ee851b16727cc6, type: 3}
@@ -1391,7 +1390,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderNames:
-  - GUI/KT 3D Text
+  - GUI/KT 3D Text Diffuse
 --- !u!114 &114264027516742292
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1414,6 +1413,23 @@ MonoBehaviour:
   AllowSelectionWrapY: 0
   ForceSelectionHighlight: 0
   ForceInteractionHighlight: 0
+--- !u!114 &114309055955397862
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1906914262126064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c44b785f6759f046b9ae75f40b7d860, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audio: {fileID: 114472281152260480}
+  bomb: {fileID: 114377869487060660}
+  module: {fileID: 114068121071749754}
+  textColors: []
+  buttons: []
+  buttonWords: []
 --- !u!114 &114352837331372938
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1438,18 +1454,6 @@ MonoBehaviour:
   m_Script: {fileID: 2144496390, guid: 45b809be76fd7a3468b6f517bced6f28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114386243140647760
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1906914262126064}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adf69c2de51bd3c43bbd9bc22578ee08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _seed: 47
 --- !u!114 &114415666453676470
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1462,7 +1466,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderNames:
-  - GUI/KT 3D Text
+  - GUI/KT 3D Text Diffuse
 --- !u!114 &114472281152260480
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1559,39 +1563,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShaderNames:
   - KT/Mobile/DiffuseTint
---- !u!114 &114761453671254284
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1906914262126064}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1515405f464824d4587732539a179687, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audio: {fileID: 114472281152260480}
-  bomb: {fileID: 114377869487060660}
-  ruleSeedable: {fileID: 114386243140647760}
-  textColors:
-  - {r: 0.88235295, g: 0, b: 0, a: 1}
-  - {r: 0.09948096, g: 0.8455882, b: 0.104626484, a: 1}
-  - {r: 0.9852941, g: 0.66832125, b: 0.10142732, a: 1}
-  - {r: 0.33574829, g: 0.4218246, b: 0.99264705, a: 1}
-  - {r: 0.81641513, g: 0.9852941, b: 0.04346884, a: 1}
-  - {r: 0.58823526, g: 0.4256055, b: 0.18166089, a: 1}
-  buttons:
-  - {fileID: 114127635917568740}
-  - {fileID: 114042245293306554}
-  - {fileID: 114986752007621130}
-  - {fileID: 114529675925384374}
-  - {fileID: 114264027516742292}
-  buttonWords:
-  - {fileID: 102637687655494436}
-  - {fileID: 102978446376593446}
-  - {fileID: 102470643587902234}
-  - {fileID: 102825255592872342}
-  - {fileID: 102459582581767342}
 --- !u!114 &114802689713808436
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1630,7 +1601,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderNames:
-  - GUI/KT 3D Text
+  - GUI/KT 3D Text Diffuse
 --- !u!114 &114877514471331836
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1669,7 +1640,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderNames:
-  - GUI/KT 3D Text
+  - GUI/KT 3D Text Diffuse
 --- !u!114 &114955533763374196
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1717,4 +1688,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderNames:
-  - GUI/KT 3D Text
+  - GUI/KT 3D Text Diffuse

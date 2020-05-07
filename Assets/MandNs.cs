@@ -23,11 +23,18 @@ public class MandNs : MonoBehaviour
     void Awake()
     {
         moduleId = moduleIdCounter++;
+        foreach (KMSelectable button in buttons)
+            button.OnInteract += delegate () { ButtonPress(button); return false; };
     }
 
     void Start()
     {
 
+    }
+
+    void ButtonPress(KMSelectable button)
+    {
+        var ix = Array.IndexOf(buttons, button);
     }
 
     // Twitch Plays

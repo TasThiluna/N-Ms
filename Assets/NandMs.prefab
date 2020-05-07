@@ -1280,7 +1280,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderNames:
-  - GUI/KT 3D Text
+  - GUI/KT 3D Text Diffuse
 --- !u!114 &114049232312324712
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1315,7 +1315,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderNames:
-  - GUI/KT 3D Text
+  - GUI/KT 3D Text Diffuse
 --- !u!114 &114067597514509304
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1427,7 +1427,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderNames:
-  - GUI/KT 3D Text
+  - GUI/KT 3D Text Diffuse
 --- !u!114 &114239046379764106
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1441,7 +1441,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audio: {fileID: 114659359768305904}
   bomb: {fileID: 114154092435650982}
-  module: {fileID: 0}
+  module: {fileID: 114828078503038502}
   ruleSeedable: {fileID: 114309945031191060}
   textColors:
   - {r: 0.88235295, g: 0, b: 0, a: 1}
@@ -1597,7 +1597,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderNames:
-  - GUI/KT 3D Text
+  - GUI/KT 3D Text Diffuse
 --- !u!114 &114659359768305904
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1705,7 +1705,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShaderNames:
-  - GUI/KT 3D Text
+  - GUI/KT 3D Text Diffuse
 --- !u!114 &114966670546102758
 MonoBehaviour:
   m_ObjectHideFlags: 1

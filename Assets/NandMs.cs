@@ -16,7 +16,7 @@ public class NandMs : MonoBehaviour
     static int moduleIdCounter = 1;
     int moduleId;
     bool moduleSolved;
-    bool recalcing;
+    bool recalcing = true;
     string[] allWords;
     public Color[] textColors;
     public KMSelectable[] buttons;
@@ -35,6 +35,7 @@ public class NandMs : MonoBehaviour
         moduleId = moduleIdCounter++;
         foreach (KMSelectable button in buttons)
             button.OnInteract += delegate () { ButtonPress(button); return false; };
+        module.OnActivate += delegate () { recalcing = false; };
 
         var rnd = ruleSeedable.GetRNG();
         var allStrings = new List<string>();
