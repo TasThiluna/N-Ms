@@ -406,7 +406,7 @@ Transform:
   m_GameObject: {fileID: 1265297797738506}
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: -0.0007, y: 0.0008, z: 0.006}
-  m_LocalScale: {x: 0.008, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.0015, y: 0.002, z: 0.001}
   m_Children: []
   m_Father: {fileID: 4634037995869950}
   m_RootOrder: 1
@@ -536,7 +536,7 @@ Transform:
   m_GameObject: {fileID: 1648926414218290}
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: -0.0007, y: 0.0008, z: 0.006}
-  m_LocalScale: {x: 0.008, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.0015, y: 0.002, z: 0.001}
   m_Children: []
   m_Father: {fileID: 4045350899265998}
   m_RootOrder: 1
@@ -562,7 +562,7 @@ Transform:
   m_GameObject: {fileID: 1587121589781800}
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: -0.0007, y: 0.0008, z: 0.006}
-  m_LocalScale: {x: 0.008, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.0015, y: 0.002, z: 0.001}
   m_Children: []
   m_Father: {fileID: 4032431451072022}
   m_RootOrder: 1
@@ -660,7 +660,7 @@ Transform:
   m_GameObject: {fileID: 1226493494978364}
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: -0.0007, y: 0.0008, z: 0.006}
-  m_LocalScale: {x: 0.008, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.0015, y: 0.002, z: 0.001}
   m_Children: []
   m_Father: {fileID: 4600582076683128}
   m_RootOrder: 1
@@ -672,7 +672,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1774739114700978}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.213}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4153516482027346}
@@ -687,7 +687,7 @@ Transform:
   m_GameObject: {fileID: 1588095610907970}
   m_LocalRotation: {x: 0, y: -1, z: 0, w: 0}
   m_LocalPosition: {x: -0.0007, y: 0.0008, z: 0.006}
-  m_LocalScale: {x: 0.008, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.0015, y: 0.002, z: 0.001}
   m_Children: []
   m_Father: {fileID: 4077420526064514}
   m_RootOrder: 1
@@ -1177,7 +1177,7 @@ TextMesh:
   m_Anchor: 4
   m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 0
+  m_FontSize: 80
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: f2022b6627ad798409ee851b16727cc6, type: 3}
@@ -1198,7 +1198,7 @@ TextMesh:
   m_Anchor: 4
   m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 0
+  m_FontSize: 80
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: f2022b6627ad798409ee851b16727cc6, type: 3}
@@ -1219,7 +1219,7 @@ TextMesh:
   m_Anchor: 4
   m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 0
+  m_FontSize: 80
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: f2022b6627ad798409ee851b16727cc6, type: 3}
@@ -1240,7 +1240,7 @@ TextMesh:
   m_Anchor: 4
   m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 0
+  m_FontSize: 80
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: f2022b6627ad798409ee851b16727cc6, type: 3}
@@ -1261,7 +1261,7 @@ TextMesh:
   m_Anchor: 4
   m_Alignment: 0
   m_TabSize: 4
-  m_FontSize: 0
+  m_FontSize: 80
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: f2022b6627ad798409ee851b16727cc6, type: 3}
@@ -1441,6 +1441,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audio: {fileID: 114659359768305904}
   bomb: {fileID: 114154092435650982}
+  module: {fileID: 0}
   ruleSeedable: {fileID: 114309945031191060}
   textColors:
   - {r: 0.88235295, g: 0, b: 0, a: 1}

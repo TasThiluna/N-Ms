@@ -10,6 +10,7 @@ public class NandMs : MonoBehaviour
 {
     public new KMAudio audio;
     public KMBombInfo bomb;
+    public KMBombModule module;
     public KMRuleSeedable ruleSeedable;
 
     static int moduleIdCounter = 1;
@@ -76,13 +77,13 @@ public class NandMs : MonoBehaviour
             return;
         if (otherWords[otherwordindex] != button.GetComponentInChildren<TextMesh>().text)
         {
-            GetComponent<KMBombModule>().HandleStrike();
+            module.HandleStrike();
             Debug.LogFormat("[N&Ms #{0}] You pressed {1}. Strike! Resetting...", moduleId, button.GetComponentInChildren<TextMesh>().text);
             Start();
         }
         else
         {
-            GetComponent<KMBombModule>().HandlePass();
+            module.HandlePass();
             audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.CorrectChime, transform);
             Debug.LogFormat("[N&Ms #{0}] Module solved.", moduleId);
             moduleSolved = true;

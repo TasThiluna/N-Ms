@@ -1320,6 +1320,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audio: {fileID: 114799153455848176}
   bomb: {fileID: 114278508418038928}
+  module: {fileID: 0}
   ruleSeedable: {fileID: 114513791699884672}
   textColors:
   - {r: 0.88235295, g: 0, b: 0, a: 1}
