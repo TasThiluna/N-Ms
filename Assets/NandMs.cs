@@ -77,17 +77,18 @@ public class NandMs : MonoBehaviour
         button.AddInteractionPunch(.5f);
         if (moduleSolved || recalcing)
             return;
-        if (otherWords[otherwordindex] != button.GetComponentInChildren<TextMesh>().text)
+        var thisText = button.GetComponentInChildren<TextMesh>().text;
+        if (otherWords[otherwordindex] != thisText)
         {
             module.HandleStrike();
-            Debug.LogFormat("[N&Ms #{0}] You pressed {1}. Strike! Resetting...", moduleId, button.GetComponentInChildren<TextMesh>().text);
+            Debug.LogFormat("[N&Ms #{0}] You pressed {1}. That was incorrect. Strike! Resetting...", moduleId, thisText);
             Activate();
         }
         else
         {
             module.HandlePass();
             audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.CorrectChime, transform);
-            Debug.LogFormat("[N&Ms #{0}] Module solved.", moduleId);
+            Debug.LogFormat("[N&Ms #{0}] You pressed {1}. That was correct. Module solved!", moduleId, thisText);
             moduleSolved = true;
             StartCoroutine(ShowWords());
         }

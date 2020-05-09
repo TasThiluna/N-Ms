@@ -358,7 +358,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1908396653876600
 GameObject:
   m_ObjectHideFlags: 1
@@ -1427,7 +1427,13 @@ MonoBehaviour:
   audio: {fileID: 114472281152260480}
   bomb: {fileID: 114377869487060660}
   module: {fileID: 114068121071749754}
-  textColors: []
+  textColors:
+  - {r: 0.88235295, g: 0, b: 0, a: 1}
+  - {r: 0.09803922, g: 0.84705883, b: 0.105882354, a: 1}
+  - {r: 0.9843137, g: 0.6666667, b: 0.101960786, a: 1}
+  - {r: 0.3372549, g: 0.42352942, b: 0.99215686, a: 1}
+  - {r: 0.8156863, g: 0.9843137, b: 0.043137256, a: 1}
+  - {r: 0.5882353, g: 0.42745098, b: 0.18039216, a: 1}
   buttons: []
   buttonWords: []
 --- !u!114 &114352837331372938
