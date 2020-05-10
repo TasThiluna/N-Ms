@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using KModkit;
 using rnd = UnityEngine.Random;
+using System.Text.RegularExpressions;
 
 public class MandNs : MonoBehaviour
 {
@@ -27,8 +28,7 @@ public class MandNs : MonoBehaviour
     private string oneLetter;
     private int snBinary;
 
-    private static readonly string base36String = "0123456789ABCDEFGHJIKLMNOPQRSTUVWXYZ";
-    private static Char[] base36 = new Char[36];
+    private static readonly string base36 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static readonly string[] colorNames = new string[] { "red", "green", "orange", "blue", "yellow", "brown" };
     private static readonly string[] operatorNames = new string[] { "AND", "OR", "XOR", "NAND", "NOR", "XNOR" };
     private static readonly string[] ordinals = new string[] { "first", "second", "third", "fourth", "fifth" };
@@ -36,7 +36,6 @@ public class MandNs : MonoBehaviour
     private bool firstTime = true;
     private bool hasReset;
 
-    private int attempts = 1;
     private static int moduleIdCounter = 1;
     private int moduleId;
     private bool moduleSolved;
@@ -47,7 +46,6 @@ public class MandNs : MonoBehaviour
         foreach (KMSelectable button in buttons)
             button.OnInteract += delegate () { ButtonPress(button); return false; };
         module.OnActivate += delegate () { StartCoroutine(ShowWords()); };
-        base36 = base36String.ToCharArray();
     }
 
     void Start()
@@ -56,31 +54,26 @@ public class MandNs : MonoBehaviour
         oneLetter = bomb.GetBatteryCount() % 2 == 0 ? "N" : "M";
         if (!hasReset)
             Debug.LogFormat("[M&Ns #{0}] {1} corresponds to 0 and {2} corresponds to 1.", moduleId, zeroLetter, oneLetter);
-        solution = rnd.Range(0, 5);
+        regenerate:
         for (int i = 0; i < 5; i++)
         {
             buttonColors[i] = rnd.Range(0, 6);
             buttonValues[i] = rnd.Range(0, 32);
-            convertedValues[i] = Convert.ToString(buttonValues[i], 2).Replace("0", zeroLetter).Replace("1", oneLetter);
-            while (convertedValues[i].Length != 5)
-                convertedValues[i] = zeroLetter + convertedValues[i];
+            convertedValues[i] = Convert.ToString(buttonValues[i], 2).Replace("0", zeroLetter).Replace("1", oneLetter).PadLeft(5, zeroLetter[0]);
         }
-        ser = bomb.GetSerialNumber().ToCharArray().ToList();
-        ser.Remove(ser[buttonColors[1]]);
+        ser = bomb.GetSerialNumber().ToList();
+        ser.RemoveAt(buttonColors[1]);
         var binaryAdditions = new int[] { 16, 8, 4, 2, 1 };
         for (int i = 0; i < 5; i++)
         {
-            if (Array.IndexOf(base36, ser[i]) % 2 == 1)
+            if (base36.IndexOf(ser[i]) % 2 == 1)
                 snBinary += binaryAdditions[i];
         }
         Debug.LogFormat("[M&Ns #{0}] The considered serial number is {1}.", moduleId, new string(ser.ToArray()));
-        string snBinaryString = Convert.ToString(snBinary, 2);
-        while (snBinaryString.Length != 5)
-            snBinaryString = "0" + snBinaryString;
+        string snBinaryString = Convert.ToString(snBinary, 2).PadLeft(5, '0');
         Debug.LogFormat("[M&Ns #{0}] The binary from the serial number is {1}.", moduleId, snBinaryString);
         for (int i = 0; i < 5; i++)
         {
-            regenerate:
             switch (buttonColors[i])
             {
                 case 0:
@@ -102,38 +95,18 @@ public class MandNs : MonoBehaviour
                     results[i] = ~(buttonValues[i] ^ snBinary);
                     break;
             }
-            if (i == solution)
-            {
-                if (results[i] < 0 || !bomb.GetSerialNumber().Contains(base36[results[i]]))
-                {
-                    if (i != 1)
-                        buttonColors[i] = rnd.Range(0, 6);
-                    buttonValues[i] = rnd.Range(0, 32);
-                    goto regenerate;
-                }
-            }
-            else
-            {
-                if (results[i] > -1 && bomb.GetSerialNumber().Contains(base36[results[i]]))
-                {
-                    if (i != 1)
-                        buttonColors[i] = rnd.Range(0, 6);
-                    buttonValues[i] = rnd.Range(0, 32);
-                    goto regenerate;
-                }
-            }
+            results[i] &= 0x1f;
         }
+        if (results.Count(x => bomb.GetSerialNumber().Contains(base36[x])) != 1)
+            goto regenerate;
+        solution = Array.IndexOf(results, results.First(x => bomb.GetSerialNumber().Contains(base36[x])));
         string solutionBinary;
         for (int i = 0; i < 5; i++)
         {
             Debug.LogFormat("[M&Ns #{0}] The {1} button has {2} text and says {3}.", moduleId, ordinals[i], colorNames[buttonColors[i]], convertedValues[i]);
-            var binaryString = Convert.ToString(buttonValues[i], 2);
-            while (binaryString.Length != 5)
-                binaryString = "0" + binaryString;
+            var binaryString = Convert.ToString(buttonValues[i], 2).PadLeft(5, '0');
             Debug.LogFormat("[M&Ns #{0}] This button has a binary value of {1}.", moduleId, binaryString);
-            binaryString = Convert.ToString(results[i], 2);
-            while (binaryString.Length != 5)
-                binaryString = "0" + binaryString;
+            binaryString = Convert.ToString(results[i], 2).PadLeft(5, '0');
             Debug.LogFormat("[M&Ns #{0}] The value of this button {1} the binary from the serial number yields {2}.", moduleId, operatorNames[buttonColors[i]], binaryString);
             if (i == solution)
                 solutionBinary = binaryString;
@@ -160,7 +133,7 @@ public class MandNs : MonoBehaviour
         {
             module.HandlePass();
             audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.CorrectChime, transform);
-            Debug.LogFormat("[N&Ms #{0}] You pressed {1}. That was correct. Module solved!", moduleId, thisText);
+            Debug.LogFormat("[M&Ns #{0}] You pressed {1}. That was correct. Module solved!", moduleId, thisText);
             moduleSolved = true;
             StartCoroutine(ShowWords());
         }
@@ -193,16 +166,24 @@ public class MandNs : MonoBehaviour
 
     // Twitch Plays
     #pragma warning disable 414
-    private readonly string TwitchHelpMessage = "!{0} ";
+    private readonly string TwitchHelpMessage = @"!{0} press <1/2/3/4/5> [presses the button in that position from left to right]";
     #pragma warning restore 414
 
-    IEnumerator ProcessTwitchCommand(string input)
+    KMSelectable[] ProcessTwitchCommand(string command)
     {
-        yield return null;
+        Match m;
+        if ((m = Regex.Match(command, @"^\s*(?:press\s+)?([1-5])$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)).Success)
+            return new[] { buttons[int.Parse(m.Groups[1].Value) - 1] };
+        return null;
     }
 
     IEnumerator TwitchHandleForcedSolve()
     {
-        yield return null;
+        buttons[solution].OnInteract();
+        while (cantPress)
+        {
+            yield return true;
+            yield return new WaitForSeconds(.1f);
+        }
     }
 }

@@ -11,12 +11,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 615501dbe4f3fe94fbf4b564abb10237, type: 3}
   m_Name: ModConfig
   m_EditorClassIdentifier: 
-  id: NandMs
-  title: N&Ms
+  id: NandMsPack
+  title: N&Ms and it's brethren
   author: TasThing
-  description: "Mama: \"No nom-nom!\" Nana: \"Mama no man?\"\r\n\r\nModule idea by
-    Pruz, implemented by TasThing.\r\nComes with Twitch Plays and ruleseed support,
-    thanks to Timwi.\r\n\r\nManual HTML: https://ktane.timwi.de/HTML/N%26Ms.html\r\nManual
+  description: "These modules are neither slim nor shady.\n\r\nN&Ms idea by Pruz,
+    M&Ns idea by Procyon.\n\r\nManual HTML: https://ktane.timwi.de/HTML/N%26Ms.html\r\nManual
     PDF: https://ktane.timwi.de/PDF/N%26Ms.pdf"
   version: 
   outputFolder: build

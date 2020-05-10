@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Name: WorkshopItem
   m_EditorClassIdentifier: 
   WorkshopPublishedFileID: 1892878540
-  Title: N&Ms
-  Tags: []
+  Title: N&Ms and it's brethren
+  Tags:
+  - Regular Module
