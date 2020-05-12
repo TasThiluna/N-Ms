@@ -63,15 +63,11 @@ public class MandNs : MonoBehaviour
         }
         ser = bomb.GetSerialNumber().ToList();
         ser.RemoveAt(buttonColors[1]);
+        snBinary = 0;
         var binaryAdditions = new int[] { 16, 8, 4, 2, 1 };
         for (int i = 0; i < 5; i++)
-        {
             if (base36.IndexOf(ser[i]) % 2 == 1)
                 snBinary += binaryAdditions[i];
-        }
-        Debug.LogFormat("[M&Ns #{0}] The considered serial number is {1}.", moduleId, new string(ser.ToArray()));
-        string snBinaryString = Convert.ToString(snBinary, 2).PadLeft(5, '0');
-        Debug.LogFormat("[M&Ns #{0}] The binary from the serial number is {1}.", moduleId, snBinaryString);
         for (int i = 0; i < 5; i++)
         {
             switch (buttonColors[i])
@@ -100,6 +96,9 @@ public class MandNs : MonoBehaviour
         if (results.Count(x => bomb.GetSerialNumber().Contains(base36[x])) != 1)
             goto regenerate;
         solution = Array.IndexOf(results, results.First(x => bomb.GetSerialNumber().Contains(base36[x])));
+        Debug.LogFormat("[M&Ns #{0}] The considered serial number is {1}.", moduleId, new string(ser.ToArray()));
+        string snBinaryString = Convert.ToString(snBinary, 2).PadLeft(5, '0');
+        Debug.LogFormat("[M&Ns #{0}] The binary from the serial number is {1}.", moduleId, snBinaryString);
         string solutionBinary;
         for (int i = 0; i < 5; i++)
         {
