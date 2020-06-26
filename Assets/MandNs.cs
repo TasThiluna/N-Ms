@@ -99,7 +99,6 @@ public class MandNs : MonoBehaviour
         Debug.LogFormat("[M&Ns #{0}] The considered serial number is {1}.", moduleId, new string(ser.ToArray()));
         string snBinaryString = Convert.ToString(snBinary, 2).PadLeft(5, '0');
         Debug.LogFormat("[M&Ns #{0}] The binary from the serial number is {1}.", moduleId, snBinaryString);
-        string solutionBinary;
         for (int i = 0; i < 5; i++)
         {
             Debug.LogFormat("[M&Ns #{0}] The {1} button has {2} text and says {3}.", moduleId, ordinals[i], colorNames[buttonColors[i]], convertedValues[i]);
@@ -107,8 +106,6 @@ public class MandNs : MonoBehaviour
             Debug.LogFormat("[M&Ns #{0}] This button has a binary value of {1}.", moduleId, binaryString);
             binaryString = Convert.ToString(results[i], 2).PadLeft(5, '0');
             Debug.LogFormat("[M&Ns #{0}] The value of this button {1} the binary from the serial number yields {2}.", moduleId, operatorNames[buttonColors[i]], binaryString);
-            if (i == solution)
-                solutionBinary = binaryString;
         }
         Debug.LogFormat("[M&Ns #{0}] The {1} button yields {2} when converted to base-36. It is the correct button to press.", moduleId, ordinals[solution], base36[results[solution]]);
         if (hasReset)
@@ -117,6 +114,8 @@ public class MandNs : MonoBehaviour
 
     void ButtonPress(KMSelectable button)
     {
+        audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, button.transform);
+        button.AddInteractionPunch(.5f);
         if (moduleSolved || cantPress)
             return;
         var ix = Array.IndexOf(buttons, button);
