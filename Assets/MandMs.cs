@@ -17,8 +17,11 @@ public class MandMs : MonoBehaviour
     public KMSelectable[] buttons;
     public TextMesh[] buttonWords;
 
+    private bool[] presentGrid = new bool[25];
+    private bool[][] grids;
     private int[] solution = new int[5];
     private int[] buttonColors = new int[5];
+    private string[] labels = new string[5];
     private int stage;
     private int gridIndex;
     private int rotationIndex;
@@ -35,9 +38,6 @@ public class MandMs : MonoBehaviour
     private int moduleId;
     private bool moduleSolved;
 
-    // Rule seed
-    private bool[][] grids;
-
     void Awake()
     {
         moduleId = moduleIdCounter++;
@@ -52,7 +52,7 @@ public class MandMs : MonoBehaviour
 
         for (var gridIx = 0; gridIx < 9; gridIx++)
         {
-            var grid = findGrid(new bool[25], 0, gridsAlready, rnd);
+            var grid = FindGrid(new bool[25], 0, gridsAlready, rnd);
             if (grid == null)
             {
                 Debug.LogFormat("<M&Ms #{0}> Fatal error: no grid!", moduleId);
@@ -64,19 +64,19 @@ public class MandMs : MonoBehaviour
             for (var rot = 0; rot < 4; rot++)
             {
                 gridsAlready.Add(grid);
-                grid = rotate(grid);
+                grid = Rotate(grid);
             }
         }
     }
 
-    private static bool[] rotate(bool[] grid, int numberOfTimes = 1)
+    static bool[] Rotate(bool[] grid, int numberOfTimes = 1)
     {
         for (var n = 0; n < numberOfTimes; n++)
             grid = grid.Select((_, i) => grid[(i % 5) * 5 + 4 - (i / 5)]).ToArray();
         return grid;
     }
 
-    bool[] findGrid(bool[] grid, int ix, List<bool[]> gridsAlready, MonoRandom rnd)
+    bool[] FindGrid(bool[] grid, int ix, List<bool[]> gridsAlready, MonoRandom rnd)
     {
         if (ix % 5 == 0)
             for (var prevRow = 0; prevRow * 5 < ix - 5; prevRow++)
@@ -102,13 +102,12 @@ public class MandMs : MonoBehaviour
         }
         var pixel = rnd.Next(0, 2) != 0;
         grid[ix] = pixel;
-        var success = findGrid(grid, ix + 1, gridsAlready, rnd);
+        var success = FindGrid(grid, ix + 1, gridsAlready, rnd);
         if (success != null)
             return success;
         grid[ix] = !pixel;
-        return findGrid(grid, ix + 1, gridsAlready, rnd);
+        return FindGrid(grid, ix + 1, gridsAlready, rnd);
     }
-
 
     void Start()
     {
@@ -121,9 +120,36 @@ public class MandMs : MonoBehaviour
         solution = Enumerable.Range(0, 5).ToList().Shuffle().ToArray();
         gridIndex = rnd.Range(0, 9);
         rotationIndex = rnd.Range(0, 4);
+        presentGrid = Rotate(grids[gridIndex], rotationIndex).ToArray();
         for (int i = 0; i < 5; i++)
+        {
             buttonColors[i] = rnd.Range(0, 6);
+            var currentLabel = new List<char>();
+            for (int j = 0; j < 5; j++)
+                currentLabel.Add(presentGrid[(5 * solution[i]) + j] ? blackLetter : whiteLetter);
+            labels[i] = new string(currentLabel.ToArray());
+            switch (buttonColors[i])
+            {
+                case 5:
+                    var modifiedLabel = new List<char>();
+                    for (int j = 0; j < 5; j++)
+                        modifiedLabel.Add(labels[i][j] == 'M' ? 'N' : 'M');
+                    labels[i] = new string(modifiedLabel.ToArray());
+                    break;
+                default:
+                    labels[i] = Shift(labels[i], buttonColors[i]);
+                    break;
+            }
+        }
         Debug.LogFormat("[M&Ms #{0}] The grid present is the {1} one, {2}.", moduleId, ordinals[gridIndex], rotationNames[rotationIndex]);
+        Debug.LogFormat("[M&Ms #{0}] The correct order in which to press the buttons is {1}.", moduleId, solution.Select(x => ordinals[x]).Join(", "));
+        Debug.Log(Rotate(grids[0], 1).Select(x => x ? "█" : "░").Join(""));
+        //var jegijeg = new List<string>();
+        //for (int i = 0; i < 5; i++)
+        //{
+        //    jegijeg.Add(Enumerable.Range((solution[i] * 5), 5).Select(x => presentGrid[x] ? "█" : "░").Join(""));
+        //}
+        //Debug.Log(jegijeg.Join(" "));
         if (hasReset)
             StartCoroutine(ShowWords());
     }
@@ -175,7 +201,7 @@ public class MandMs : MonoBehaviour
             yield return new WaitForSeconds(.2f);
             for (int i = 0; i < 5; i++)
             {
-                buttonWords[i].text = "MMMMM";
+                buttonWords[i].text = labels[i];
                 buttonWords[i].color = textColors[buttonColors[i]];
                 yield return new WaitForSeconds(.3f);
             }
@@ -183,10 +209,15 @@ public class MandMs : MonoBehaviour
         cantPress = false;
     }
 
+    static string Shift(string str, int i)
+    {
+        return str.Substring(str.Length - i) + str.Substring(0, str.Length - i);
+    }
+
     // Twitch Plays
-#pragma warning disable 414
+    #pragma warning disable 414
     private readonly string TwitchHelpMessage = "!{0} ";
-#pragma warning restore 414
+    #pragma warning restore 414
 
     IEnumerator ProcessTwitchCommand(string input)
     {
@@ -195,6 +226,10 @@ public class MandMs : MonoBehaviour
 
     IEnumerator TwitchHandleForcedSolve()
     {
-        yield return null;
+        while (!moduleSolved)
+        {
+            buttons[solution[stage]].OnInteract();
+            yield return new WaitForSeconds(.1f);
+        }
     }
 }
