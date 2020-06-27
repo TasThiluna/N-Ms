@@ -9,6 +9,7 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type='text/css' href="css/font.css">
     <script src="js/ktane-utils.js"></script>
+    <script src="js/ruleseed.js"></script>
 	<style>
 		table {
 			margin-left: auto;
@@ -30,6 +31,68 @@
 			background-color: black;
 		}
 	</style>
+    <script>
+        function setDefaultRules(rnd) { setRules(rnd); }
+
+        function setRules(rnd)
+        {
+            let subtables = document.getElementsByClassName('subtable');
+            let grids = [];
+            for (let gridIx = 0; gridIx < 9; gridIx++)
+            {
+                let grid = [];
+                function findGrid()
+                {
+                    if (grid.length % 5 == 0)
+                        for (let prevRow = 0; prevRow*5 < grid.length-5; prevRow++)
+                            if (Array.from(Array(5).keys()).every(x => grid[prevRow*5 + x] === grid[grid.length-5 + x]))
+                                return false;
+                    if (grid.length == 25)
+                    {
+                        for (let col = 0; col < 5; col++)
+                            for (let col2 = 0; col2 < col; col2++)
+                                if (Array.from(Array(5).keys()).every(y => grid[y*5 + col] === grid[y*5 + col2]))
+                                    return false;
+
+                        return grids.every(gr => {
+                            for (let j = 0; j < 25; j++)
+                                if (gr[j] !== grid[j])
+                                    return true;
+                            return false;
+                        });
+                    }
+                    let pixel = rnd.next(0, 2) != 0;
+                    grid.push(pixel);
+                    let success = findGrid();
+                    if (success)
+                        return true;
+                    grid.pop();
+                    grid.push(!pixel);
+                    success = findGrid();
+                    if (success)
+                        return true;
+                    grid.pop();
+                    return false;
+                }
+                let gridSuccessful = findGrid(0);
+                if (!gridSuccessful)
+                {
+                    console.log("Fatal error: no grid!");
+                    return;
+                }
+
+                let tds = subtables[gridIx].getElementsByTagName('td');
+                for (let i = 0; i < 25; i++)
+                    tds[i].className = grid[i] ? 'black' : '';
+
+                for (let rot = 0; rot < 4; rot++)
+                {
+                    grids.push(grid);
+                    grid = grid.map((_, i) => grid[(i%5)*5 + 4-((i/5)|0)]);
+                }
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="section">
