@@ -29,7 +29,8 @@ public class MandMs : MonoBehaviour
     private char blackLetter;
 
     private static readonly string[] ordinals = new string[9] { "first", "second", "third", "fourth", "fifth", "sixth", "seventh", "eighth", "ninth" };
-    private static readonly string[] rotationNames = new string[4] { "not rotated", "rotated 90° clockwise", "rotated 180°", "rotated 90° counterclockwise" };
+    private static readonly string[] rotationNames = new string[4] { "not rotated", "rotated 90° counterclockwise", "rotated 180°", "rotated 90° clockwise" };
+    private static readonly string[] colorNames = new string[6] { "red", "green", "orange", "blue", "yellow", "brown" };
     private bool cantPress = true;
     private bool firstTime = true;
     private bool hasReset;
@@ -142,14 +143,9 @@ public class MandMs : MonoBehaviour
             }
         }
         Debug.LogFormat("[M&Ms #{0}] The grid present is the {1} one, {2}.", moduleId, ordinals[gridIndex], rotationNames[rotationIndex]);
+        Debug.LogFormat("[M&Ms #{0}] The colors are {1}.", moduleId, buttonColors.Select(x => colorNames[x]).Join(", "));
         Debug.LogFormat("[M&Ms #{0}] The correct order in which to press the buttons is {1}.", moduleId, solution.Select(x => ordinals[x]).Join(", "));
-        Debug.Log(Rotate(grids[0], 1).Select(x => x ? "█" : "░").Join(""));
-        //var jegijeg = new List<string>();
-        //for (int i = 0; i < 5; i++)
-        //{
-        //    jegijeg.Add(Enumerable.Range((solution[i] * 5), 5).Select(x => presentGrid[x] ? "█" : "░").Join(""));
-        //}
-        //Debug.Log(jegijeg.Join(" "));
+        Debug.Log(presentGrid.Select(x => x ? "█" : "░" ).Join(""));
         if (hasReset)
             StartCoroutine(ShowWords());
     }
