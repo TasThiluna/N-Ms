@@ -60,7 +60,9 @@ public class MandMs : MonoBehaviour
                 throw new InvalidOperationException();
             }
             grids[gridIx] = grid;
-            Debug.LogFormat("<M&Ms #{0}> Grid #{1}: {2}", moduleId, gridIx, grid.Select(b => b ? "█" : "░").Join(""));
+
+            //var gridStr = grid.Select(b => b ? "█" : "░").Join("");
+            //Debug.LogFormat("<M&Ms #{0}> Grid #{1}:\n{2}", moduleId, gridIx, gridStr.Substring(0, 5) + "\n" + gridStr.Substring(5, 5) + "\n" + gridStr.Substring(10, 5) + "\n" + gridStr.Substring(15, 5) + "\n" + gridStr.Substring(20, 5));
 
             for (var rot = 0; rot < 4; rot++)
             {
@@ -137,7 +139,7 @@ public class MandMs : MonoBehaviour
                     labels[i] = modifiedLabel;
                     break;
                 default:
-                    labels[i] = Shift(labels[i], buttonColors[i]);
+                    labels[i] = Shift(labels[i], 5 - buttonColors[i]);
                     break;
             }
         }
