@@ -218,7 +218,15 @@ public class MandMs : MonoBehaviour
 
     IEnumerator ProcessTwitchCommand(string input)
     {
+        input = input.Replace(" ", "");
+        if (input.Length > 5 || !input.All(x => "12345".Contains(x)) || input.Distinct().ToArray().Length != input.Length)
+            yield break;
         yield return null;
+        for (int i = 0; i < input.Length; i++)
+        {
+            buttons[Int32.Parse(input[i].ToString()) - 1].OnInteract();
+            yield return new WaitForSeconds(.1f);
+        }
     }
 
     IEnumerator TwitchHandleForcedSolve()
