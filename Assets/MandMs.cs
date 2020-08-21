@@ -125,17 +125,16 @@ public class MandMs : MonoBehaviour
         for (int i = 0; i < 5; i++)
         {
             buttonColors[i] = rnd.Range(0, 6);
-            var currentLabel = new List<char>();
+            labels[i] = "";
             for (int j = 0; j < 5; j++)
-                currentLabel.Add(presentGrid[(5 * solution[i]) + j] ? blackLetter : whiteLetter);
-            labels[i] = new string(currentLabel.ToArray());
+                labels[i] += presentGrid[(5 * Array.IndexOf(solution, i)) + j] ? blackLetter : whiteLetter;
             switch (buttonColors[i])
             {
                 case 5:
-                    var modifiedLabel = new List<char>();
+                    var modifiedLabel = "";
                     for (int j = 0; j < 5; j++)
-                        modifiedLabel.Add(labels[i][j] == 'M' ? 'N' : 'M');
-                    labels[i] = new string(modifiedLabel.ToArray());
+                        modifiedLabel += labels[i][j] == 'M' ? 'N' : 'M';
+                    labels[i] = modifiedLabel;
                     break;
                 default:
                     labels[i] = Shift(labels[i], buttonColors[i]);
@@ -145,7 +144,7 @@ public class MandMs : MonoBehaviour
         Debug.LogFormat("[M&Ms #{0}] The grid present is the {1} one, {2}.", moduleId, ordinals[gridIndex], rotationNames[rotationIndex]);
         Debug.LogFormat("[M&Ms #{0}] The colors are {1}.", moduleId, buttonColors.Select(x => colorNames[x]).Join(", "));
         Debug.LogFormat("[M&Ms #{0}] The correct order in which to press the buttons is {1}.", moduleId, solution.Select(x => ordinals[x]).Join(", "));
-        Debug.Log(presentGrid.Select(x => x ? "█" : "░" ).Join(""));
+        //Debug.Log(presentGrid.Select(x => x ? "█" : "░" ).Join(""));
         if (hasReset)
             StartCoroutine(ShowWords());
     }

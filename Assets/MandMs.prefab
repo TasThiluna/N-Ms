@@ -352,7 +352,7 @@ GameObject:
   - component: {fileID: 114068121071749754}
   - component: {fileID: 114009362775010420}
   - component: {fileID: 114309055955397862}
-  - component: {fileID: 114970460171672826}
+  - component: {fileID: 114561055489071024}
   m_Layer: 0
   m_Name: MandMs
   m_TagString: Untagged
@@ -1428,7 +1428,7 @@ MonoBehaviour:
   audio: {fileID: 114472281152260480}
   bomb: {fileID: 114377869487060660}
   module: {fileID: 114068121071749754}
-  RuleSeedable: {fileID: 114970460171672826}
+  RuleSeedable: {fileID: 114561055489071024}
   textColors:
   - {r: 0.88235295, g: 0, b: 0, a: 1}
   - {r: 0.09803922, g: 0.84705883, b: 0.105882354, a: 1}
@@ -1542,6 +1542,18 @@ MonoBehaviour:
   m_Script: {fileID: -381104716, guid: 45b809be76fd7a3468b6f517bced6f28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114561055489071024
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1906914262126064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adf69c2de51bd3c43bbd9bc22578ee08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _seed: 1
 --- !u!114 &114588644388974706
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1672,18 +1684,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HighlightScale: {x: 1, y: 1, z: 1}
   OutlineAmount: 0
---- !u!114 &114970460171672826
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1906914262126064}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df430f9657844f74a8628e70d980512a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _seed: 1
 --- !u!114 &114986752007621130
 MonoBehaviour:
   m_ObjectHideFlags: 1
