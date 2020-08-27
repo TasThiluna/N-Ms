@@ -130,7 +130,7 @@ public class NandMs : MonoBehaviour
 
     // Twitch Plays
     #pragma warning disable 414
-    private readonly string TwitchHelpMessage = @"!{0} press <1/2/3/4/5> [presses the button in that position from top to bottom]";
+    private readonly string TwitchHelpMessage = @"!{0} press <1/2/3/4/5> [Presses the button in that position from top to bottom.]";
     #pragma warning restore 414
 
     KMSelectable[] ProcessTwitchCommand(string command)

@@ -164,7 +164,7 @@ public class MandNs : MonoBehaviour
 
     // Twitch Plays
     #pragma warning disable 414
-    private readonly string TwitchHelpMessage = @"!{0} press <1/2/3/4/5> [presses the button in that position from left to right]";
+    private readonly string TwitchHelpMessage = @"!{0} press <1/2/3/4/5> [Presses the button in that position from left to right.]";
     #pragma warning restore 414
 
     KMSelectable[] ProcessTwitchCommand(string command)

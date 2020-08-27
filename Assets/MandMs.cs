@@ -213,7 +213,7 @@ public class MandMs : MonoBehaviour
 
     // Twitch Plays
     #pragma warning disable 414
-    private readonly string TwitchHelpMessage = "!{0} ";
+    private readonly string TwitchHelpMessage = "!{0} 12345 [Preses the buttons in that order, from top to bottom. Less than 5 buttons can be pressed, e.g. !{0} 12 and !{0} 345]";
     #pragma warning restore 414
 
     IEnumerator ProcessTwitchCommand(string input)
