@@ -113,6 +113,40 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &36627551 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1774739114700978, guid: 8f6e164bbccb33b40ad136e59fe5809e,
+    type: 2}
+  m_PrefabInternal: {fileID: 1814842888}
+--- !u!114 &36627552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 36627551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df430f9657844f74a8628e70d980512a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _seed: 1
+--- !u!1 &99543502 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1906914262126064, guid: 2dfd6ff67f7f28d459dc615740e95d07,
+    type: 2}
+  m_PrefabInternal: {fileID: 1300782988}
+--- !u!114 &99543503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 99543502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df430f9657844f74a8628e70d980512a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _seed: 1
 --- !u!1001 &386259963
 Prefab:
   m_ObjectHideFlags: 0
@@ -305,7 +339,13 @@ Prefab:
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 114309055955397862, guid: 2dfd6ff67f7f28d459dc615740e95d07,
+        type: 2}
+      propertyPath: RuleSeedable
+      value: 
+      objectReference: {fileID: 99543503}
+    m_RemovedComponents:
+    - {fileID: 114561055489071024, guid: 2dfd6ff67f7f28d459dc615740e95d07, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 2dfd6ff67f7f28d459dc615740e95d07, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &1814842888
@@ -347,7 +387,13 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 114239046379764106, guid: 8f6e164bbccb33b40ad136e59fe5809e,
+        type: 2}
+      propertyPath: ruleSeedable
+      value: 
+      objectReference: {fileID: 36627552}
+    m_RemovedComponents:
+    - {fileID: 114989096940511332, guid: 8f6e164bbccb33b40ad136e59fe5809e, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 8f6e164bbccb33b40ad136e59fe5809e, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1821888714
@@ -494,7 +540,7 @@ Prefab:
         type: 2}
       propertyPath: m_Font
       value: 
-      objectReference: {fileID: 12800000, guid: 1ebe1d96973a920409b439b3a0e2bb63,
+      objectReference: {fileID: 12800000, guid: 451d40bceebd28f4d8d52ce2127536e7,
         type: 3}
     - target: {fileID: 23020097642273804, guid: 8814ea52310d2614a9feda02ec355ae4,
         type: 2}
@@ -505,7 +551,7 @@ Prefab:
         type: 2}
       propertyPath: m_Font
       value: 
-      objectReference: {fileID: 12800000, guid: 1ebe1d96973a920409b439b3a0e2bb63,
+      objectReference: {fileID: 12800000, guid: 451d40bceebd28f4d8d52ce2127536e7,
         type: 3}
     - target: {fileID: 23241206709445364, guid: 8814ea52310d2614a9feda02ec355ae4,
         type: 2}
