@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using KModkit;
 using rnd = UnityEngine.Random;
+using System.Text.RegularExpressions;
 
 public class NandNs : MonoBehaviour
 {
@@ -20,14 +21,14 @@ public class NandNs : MonoBehaviour
 
     private List<int>[] solution = new List<int>[5];
     private List<int> pressedButtons = new List<int>();
-    private int[] stage2Colors = new int[5];
 
     private int[] buttonColors = new int[5];
     private string[] labels = new string[5];
     private int stage;
     private bool cantPress = true;
+    private bool firstTime = true;
 
-    private static readonly string[] ordinals = new string[5] { "first", "second", "third", "fourth", "fifth" };
+    private static readonly string[] ordinals = new string[6] { "first", "second", "third", "fourth", "fifth", "sixth" };
     private static readonly string[] colorNames = new string[6] { "red", "green", "orange", "blue", "yellow", "brown" };
 
     private static int moduleIdCounter = 1;
@@ -47,21 +48,17 @@ public class NandNs : MonoBehaviour
     void GenerateStage()
     {
         if (stage != 5)
+        {
+            Debug.LogFormat("[N&Ns #{0}] Stage {1}:", moduleId, stage + 1);
             for (int i = 0; i < 5; i++)
                 buttons[i].GetComponent<Renderer>().material.color = stage == i ? cyan : brown;
-        for (int i = 0; i < 5; i++) // TEMPORARY
-        {
-            buttonColors[i] = rnd.Range(0, 6);
-            //labels[i] = "MMMMM";
-            solution[i].Add(0);
         }
-        var sRnd = new System.Random();
         switch (stage)
         {
             case 0:
                 tryAgain1:
                 for (int i = 0; i < 5; i++)
-                    labels[i] = new string(Enumerable.Repeat("MN", 5).Select(s => s[sRnd.Next(s.Length)]).ToArray());
+                    labels[i] = new string(Enumerable.Repeat("MN", 5).Select(s => s[rnd.Range(0, 2)]).ToArray());
                 var counts = new int[5];
                 for (int i = 0; i < 5; i++)
                 {
@@ -79,26 +76,153 @@ public class NandNs : MonoBehaviour
                 solution[0].Add(Array.IndexOf(unique, true));
                 Debug.LogFormat("[N&Ns #{0}] Labels: {1}", moduleId, labels.Join(", "));
                 Debug.LogFormat("[N&Ns #{0}] Position {1} has a unique number of N's. Press that button.", moduleId, Array.IndexOf(unique, true) + 1);
-                Debug.Log(solution[0].Join(", "));
                 break;
             case 1:
                 var morseWords = new string[6] { "MNMMNMM", "NNMMNMMMNM", "NNNMNMMNNMNNMM", "NMMMMNMMMMNM", "NMNNMMNMMMNMMNNNMNN", "NMMMMNMNNNMNNNM" };
                 buttonColors = Enumerable.Range(0, 6).ToList().Shuffle().Take(5).ToArray();
-                stage2Colors = buttonColors.ToArray();
-                var color = rnd.Range(0, 6);
-                while (!stage2Colors.Contains(color))
-                    color = rnd.Range(0, 6);
-                solution[1].Add(Array.IndexOf(stage2Colors, color));
-                Debug.LogFormat("[N&Ns #{0}] \"{1}\" appears in the concatenation of all labels. Press the {2} button.", moduleId, colorNames[color].ToUpperInvariant(), ordinals[Array.IndexOf(stage2Colors, color)]);
+                var color = Enumerable.Range(0, 6).Where(x => buttonColors.Contains(x)).PickRandom();
+                solution[1].Add(Array.IndexOf(buttonColors, color));
+                Debug.LogFormat("[N&Ns #{0}] \"{1}\" appears in the concatenation of all labels. Press the {2} button.", moduleId, colorNames[color].ToUpperInvariant(), ordinals[Array.IndexOf(buttonColors, color)]);
                 var concat = morseWords[color];
                 tryAgain2:
                 while (concat.Length != 25)
                     concat += rnd.Range(0, 2) == 0 ? "M" : "N";
+                concat = Shift(concat, rnd.Range(0, 26 - morseWords[color].Length));
                 if (morseWords.Any(x => concat.Contains(x) && morseWords[color] != x))
                     goto tryAgain2;
-                concat = Shift(concat, rnd.Range(0, morseWords[color].Length));
                 for (int i = 0; i < 5; i++)
                     labels[i] = new string(concat.Skip(5 * i).Take(5).ToArray());
+                break;
+            case 2:
+                var base36 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                var directionTable = new string[8] { "TUMJY", "6SHA", "O751G", "2NPD", "9LKZE", "0WRX", "IQC3V", "B48F" };
+                var directionNames = new string[8] { "north", "northeast", "east", "southeast", "south", "southwest", "west", "northwest" };
+                buttonColors = Enumerable.Range(0, 6).ToList().Shuffle().Take(5).ToArray();
+                var missingColor = Enumerable.Range(0, 6).First(x => !buttonColors.Contains(x));
+                var targetSequence = "";
+                for (int i = 0; i < 6; i++)
+                    if (i != missingColor)
+                        targetSequence += base36.IndexOf(bomb.GetSerialNumber().ElementAt(i)) % 2 == 1 ? "N" : "M";
+                Debug.LogFormat("[N&Ns #{0}] The missing color is {1}, so ignore the {2} serial number character.", moduleId, colorNames[missingColor], ordinals[missingColor]);
+                Debug.LogFormat("[N&Ns #{0}] The target sequence is {1}.", moduleId, targetSequence);
+                var direction = Array.IndexOf(directionTable, directionTable.First(x => x.Contains(bomb.GetSerialNumber().ElementAt(missingColor)))); // Starts from north, goes clockwise
+                Debug.LogFormat("[N&Ns #{0}] The ignored character is {1}, so go {2}.", moduleId, bomb.GetSerialNumber().ElementAt(missingColor), directionNames[direction]);
+                tryAgain3:
+                for (int i = 0; i < 5; i++)
+                    labels[i] = new string(Enumerable.Repeat("MN", 5).Select(s => s[rnd.Range(0, 2)]).ToArray());
+                var torus = labels.Reverse().Join("");
+                var startingPos = rnd.Range(0, 25);
+                var curPos = startingPos;
+                for (int i = 0; i < 5; i++)
+                {
+                    var a = torus.ToCharArray();
+                    a[curPos] = targetSequence[i];
+                    torus = new string(a);
+                    curPos = Process(curPos, direction);
+                }
+                for (int i = 0; i < 25; i++)
+                {
+                    var str = "";
+                    var tempPos = i;
+                    for (int k = 0; k < 5; k++)
+                    {
+                        str += torus[tempPos];
+                        tempPos = Process(tempPos, direction);
+                    }
+                    if (str == targetSequence && i / 5 != startingPos / 5)
+                        goto tryAgain3;
+                }
+                Debug.LogFormat("[N&Ns #{0}] The torus is {1}.", moduleId, torus);
+                for (int i = 0; i < 5; i++)
+                    labels[4 - i] = new string(torus.Skip(5 * i).Take(5).ToArray());
+                var answer = 4 - (startingPos / 5);
+                solution[2].Add(answer);
+                Debug.LogFormat("[N&Ns #{0}] The target sequence can be found starting at character {1} of the {2} button and going {3}. Press that button.", moduleId, (startingPos % 5) + 1, ordinals[answer], directionNames[direction]);
+                break;
+            case 3:
+                var mButton = rnd.Range(0, 5);
+                Debug.LogFormat("[N&Ns #{0}] The {1} button is the only one that begins with an M.", moduleId, ordinals[mButton]);
+                tryAgain4:
+                for (int i = 0; i < 5; i++)
+                {
+                    buttonColors[i] = rnd.Range(0, 6);
+                    labels[i] = new string(Enumerable.Repeat("MN", 5).Select(s => s[rnd.Range(0, 2)]).ToArray());
+                    if (i != mButton && labels[i][0] == 'M')
+                    {
+                        var a = labels[i].ToCharArray();
+                        a[0] = 'N';
+                        labels[i] = new string(a);
+                    }
+                    if (i == mButton && labels[i][0] == 'N')
+                    {
+                        var a = labels[i].ToCharArray();
+                        a[0] = 'M';
+                        labels[i] = new string(a);
+                    }
+                }
+                var highestAmount = labels.Select(s => s.Count(c => c == 'N')).Max();
+                if (labels.Select(s => s.Count(c => c == 'N')).Count(x => x == highestAmount) != 1)
+                    goto tryAgain4;
+                var c1 = buttonColors[mButton] == 0 || buttonColors[mButton] == 1 || buttonColors[mButton] == 3;
+                var c2 = pressedButtons.Contains(mButton);
+                var c3 = labels[mButton].Count(c => c == 'N') % 2 == 0;
+                var c4 = mButton % 2 == 0;
+                Debug.LogFormat("C1: {0} C2: {1} C3: {2} c4: {3}", c1, c2, c3, c4);
+                if (c1 && c2 && c3 && c4)
+                    solution[3] = new List<int> { 0, 1, 2, 3, 4 };
+                else if (c1 && c2 && c3)
+                    solution[3].Add(pressedButtons[0]);
+                else if (c1 && c2 && c4)
+                    solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 1).Select(x => x.index).ToList();
+                else if (c1 && c3 && c4)
+                    solution[3].Add(4);
+                else if (c2 && c3 && c4)
+                    solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 2).Select(x => x.index).ToList();
+                else if (c1 && c2)
+                    solution[3].Add(pressedButtons[1]);
+                else if (c1 && c3)
+                    solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 3).Select(x => x.index).ToList();
+                else if (c1 && c4)
+                    solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 5).Select(x => x.index).ToList();
+                else if (c2 && c3)
+                    solution[3].Add(4);
+                else if (c2 && c4)
+                    solution[3].Add(3);
+                else if (c3 && c4)
+                    solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 4).Select(x => x.index).ToList();
+                else if (c1)
+                    solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 0).Select(x => x.index).ToList();
+                else if (c2)
+                    solution[3].Add(1);
+                else if (c3)
+                    solution[3].Add(pressedButtons[2]);
+                else if (c4)
+                    solution[3].Add(0);
+                else
+                    solution[3].Add(Array.IndexOf(labels.Select(s => s.Count(c => c == 'N')).ToArray(), highestAmount));
+                Debug.LogFormat("[N&Ns #{0}] Valid buttons: {1}", moduleId, solution[3].Select(x => ordinals[x]).Join(", "));
+                break;
+            case 4:
+                if (pressedButtons.Distinct().Count() == 4)
+                {
+                    var a = Enumerable.Range(0, 5).First(x => !pressedButtons.Contains(x));
+                    Debug.LogFormat("[N&Ns #{0}] All buttons have been pressed except for one. Press the {1} button.", moduleId, ordinals[a]);
+                    solution[4].Add(a);
+                }
+                else
+                {
+                    var base5 = Enumerable.Range(0, 5).Select(x => pressedButtons.Count(xx => xx == x)).Join("");
+                    Debug.LogFormat("[N&Ns #{0}] The base-5 number from the pressed buttons is {1}.", moduleId, base5);
+                    var binary = Convert.ToString(base5.Select(x => (int) x - 48).Aggregate(0, (x, y) => x * 5 + y), 2).Substring(0, 5).Replace("0", "M").Replace("1", "N").PadLeft(5, 'M');
+                    var a = rnd.Range(0, 5);
+                    tryAgain5:
+                    for (int i = 0; i < 5; i++)
+                        labels[i] = a == i ? binary : new string(Enumerable.Repeat("MN", 5).Select(s => s[rnd.Range(0, 2)]).ToArray());
+                    if (labels.Any(s => s == binary && Array.IndexOf(labels, s) != a))
+                        goto tryAgain5;
+                    Debug.LogFormat("[N&Ns #{0}] Converted to binary and taking the first 5 bits, this is {1}. Press the {2} button.", moduleId, binary, ordinals[a]);
+                    solution[4].Add(a);
+                }
                 break;
             case 5:
                 buttons[4].GetComponent<Renderer>().material.color = brown;
@@ -125,7 +249,6 @@ public class NandNs : MonoBehaviour
             Debug.LogFormat("[N&Ns #{0}] That was correct.{1}", moduleId, stage == 4 ? " Progressing to the next stage..." : "");
             stage++;
             pressedButtons.Add(ix);
-            GenerateStage();
         }
         else
         {
@@ -133,14 +256,16 @@ public class NandNs : MonoBehaviour
             Debug.LogFormat("[N&Ns #{0}] Resetting...", moduleId);
             stage = 0;
             pressedButtons.Clear();
-            GenerateStage();
+            for (int i = 0; i < 5; i++)
+                solution[i].Clear();
         }
+        GenerateStage();
     }
 
     IEnumerator ShowWords(bool hiding)
     {
         cantPress = true;
-        if (hiding)
+        if (hiding && !firstTime)
         {
             for (int i = 0; i < 5; i++)
             {
@@ -148,6 +273,7 @@ public class NandNs : MonoBehaviour
                 yield return new WaitForSeconds(.3f);
             }
         }
+        firstTime = false;
         if (!moduleSolved)
         {
             yield return new WaitForSeconds(.2f);
@@ -166,18 +292,64 @@ public class NandNs : MonoBehaviour
         return str.Substring(str.Length - i) + str.Substring(0, str.Length - i);
     }
 
+    static int Process(int i, int direction)
+    {
+        var x = i % 5;
+        var y = i / 5;
+        switch (direction)
+        {
+            case 0:
+                y--;
+                break;
+            case 1:
+                y--;
+                x++;
+                break;
+            case 2:
+                x++;
+                break;
+            case 3:
+                y++;
+                x++;
+                break;
+            case 4:
+                y++;
+                break;
+            case 5:
+                y++;
+                x--;
+                break;
+            case 6:
+                x--;
+                break;
+            case 7:
+                y--;
+                x--;
+                break;
+        }
+        return ((x + 5) % 5) + 5 * ((y + 5) % 5);
+    }
+
     // Twitch Plays
     #pragma warning disable 414
-    private readonly string TwitchHelpMessage = "!{0} ";
+    private readonly string TwitchHelpMessage = @"!{0} press <1/2/3/4/5> [Presses the button in that position from left to right.]";
     #pragma warning restore 414
 
-    IEnumerator ProcessTwitchCommand(string input)
+    KMSelectable[] ProcessTwitchCommand(string command)
     {
-        yield return null;
+        Match m;
+        if ((m = Regex.Match(command, @"^\s*(?:press\s+)?([1-5])$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)).Success)
+            return new[] { buttons[int.Parse(m.Groups[1].Value) - 1] };
+        return null;
     }
 
     IEnumerator TwitchHandleForcedSolve()
     {
-        yield return null;
+        while (!moduleSolved)
+        {
+            while (cantPress)
+                yield return true;
+            buttons[solution[stage][0]].OnInteract();
+        }
     }
 }

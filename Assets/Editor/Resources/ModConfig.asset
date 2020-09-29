@@ -14,8 +14,9 @@ MonoBehaviour:
   id: NandMsPack
   title: N&Ms and it's brethren
   author: TasThing
-  description: "These modules are neither slim nor shady.\r\n\r\nN&Ms idea by Pruz,
-    M&Ns and M&Ms ideas by Procyon.\r\n\r\nManuals HTML:\r\nhttps://ktane.timwi.de/HTML/N%26Ms.html\r\nhttps://ktane.timwi.de/HTML/M%26Ns.html\r\nhttps://ktane.timwi.de/HTML/M%26Ms.html\r\n\r\nManuals
+  description: "These modules are neither slim nor shady.\r\n\r\nN&Ms idea by Pruz.
+    M&Ns, M&Ms ideas by Procyon. N&Ns idea by Procyon and TasThing. All implementations
+    by TasThing.\r\n\r\nManuals HTML:\r\nhttps://ktane.timwi.de/HTML/N%26Ms.html\r\nhttps://ktane.timwi.de/HTML/M%26Ns.html\r\nhttps://ktane.timwi.de/HTML/M%26Ms.html\r\n\r\nManuals
     PDF:\r\nhttps://ktane.timwi.de/PDF/N%26Ms.pdf\r\nhttps://ktane.timwi.de/PDF/M%26Ns.pdf\r\nhttps://ktane.timwi.de/PDF/M%26Ms.pdf"
   version: 
   outputFolder: build

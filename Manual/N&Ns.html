@@ -9,9 +9,8 @@
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type='text/css' href="css/font.css">
     <script src="js/ktane-utils.js"></script>
-    <script src="js/ruleseed.js"></script>
 	<style>
-		#vennDiagram { max-width: 4.9in; margin: 0 auto; }
+		#vennDiagram { max-width: 3in; margin: 0 auto; }
         .legendContainer {
             display: flex;
             flex-wrap: wrap;
@@ -23,6 +22,10 @@
         .legend img { width: 10em; }
         .legendInstructions { max-width: 3.75in; }
         .legendInstructions td:first-child { text-align: center; }
+		.direction-table {
+			margin-left: auto;
+			margin-right: auto;
+		}
 	</style>
 </head>
 <body>
@@ -42,9 +45,9 @@
 				<h4>Stage 1:</h4>
 				<p>For each number k in the set of numbers 1 to 5, count how many of the kth characters of each button are Ns. Press the button that is the position of the value of k for which there is a unique number of Ns.</p>
 				<h4>Stage 2:</h4>
-				<p>In this stage, each button will have a unique color. Treat the letter M as a dot and N as a dash. Press the button the name of whose color, when converted to Morse Code with all spaces removed, appears in the concatenation of all 5 buttons, possibly wrapping around. Remember the buttons’ colors for later.</p>
+				<p>In this stage, each button will have a unique color. Treat the letter M as a dot and N as a dash. Press the button the name of whose color, when converted to Morse Code with all spaces removed, appears in the concatenation of all 5 buttons.</p>
 				<h4>Stage 3:</h4>
-				<p>In this stage, each button will have a unique color. Treat the letter M as a 0 and N as a 1.</p>
+				<p>In this stage, each button will have a unique color.</p>
 				<p>Take the serial number, but ignore one character, based on the color not present:</p>
 				<ul>
 					<li><strong>Red:</strong> 1st character</li>
@@ -55,6 +58,8 @@
 					<li><strong>Brown:</strong> 6th character</li>
 				</ul>
 				</table>
+				<p>Treat the remaining characters as base 36. If the first character is even, the first bit of your “target sequence” is an M, and an N if it is odd, and so on.</p>
+				<p>Treat the set of all letters on the module as a 5×5 torus (it wraps around in all directions), with button 5 giving the top row, button 4 giving the 2nd row, etc.</p>
 			</div>
             <div class="page-footer relative-footer">Page 1 of 3</div>
         </div>
@@ -64,10 +69,25 @@
 				<span class="page-header-section-title">N&amp;Ns</span>
 			</div>
 			<div class="page-content">
-				<p>Treat the remaining characters as base 36. If the first character is even, the first bit of your “target sequence” is a 0, and a 1 if it is odd, and so on.</p>
-				<p>Treat the set of all bits as a 5×5 torus (it wraps around in all directions), with button 5 giving the top row, button 4 giving the 2nd row, etc.</p>
-				<p>The target sequence can be found somewhere within this torus, going horizontally, vertically, or diagonally, and possibly written backwards. Press the button that contains the first bit of the target sequence.</p>
-                <p>Remember the missing color for later.</p>
+				<p>Use the serial number character that was ignored to get a direction:</p>
+				<table class='direction-table'>
+					<tr>
+						<td>B48F</td>
+						<td>TUMJY</td>
+						<td>6SHA</td>
+					</tr>
+					<tr>
+						<td>IQC3V</td>
+						<td>Oscar →</td>
+						<td>O751G</td>
+					</tr>
+					<tr>
+						<td>0WRX</td>
+						<td>9LKZE</td>
+						<td>2NPD</td>
+					</tr>
+				</table>
+				<p>The target sequence can be found somewhere within this torus, written in the direction obtained. Press the button that contains the first letter of the target sequence.</p>
 				<h4>Stage 4:</h4>
 				<p>Read the Venn diagram using the only button that starts with an M and press the button given from the resulting instruction.</p>
 				<svg xmlns='http://www.w3.org/2000/svg' version='1.1' viewBox='0 0 800 650'>
@@ -139,7 +159,7 @@
                 </div>
 				<h4>Stage 5:</h4>
 				<p>If every button pressed so far was different, press the only button that hasn’t been pressed.<p>
-                <p>Otherwise, press the button which, in stage 2, had the color that was missing in stage 3.</p>
+                <p>Otherwise, take the number of times each button has been pressed from left to right and use those numbers to form a number in base-5. Convert this to binary and take the 5 most significant bits, appending 0’s to the right until its 5 bits long if necessary. With M being 0 and N being 1, press the button whose label matches these bits.</p>
 			</div>
 			<div class="page-footer relative-footer">Page 3 of 3</div>
 		</div>
