@@ -80,18 +80,19 @@ public class NandNs : MonoBehaviour
             case 1:
                 var morseWords = new string[6] { "MNMMNMM", "NNMMNMMMNM", "NNNMNMMNNMNNMM", "NMMMMNMMMMNM", "NMNNMMNMMMNMMNNNMNN", "NMMMMNMNNNMNNNM" };
                 buttonColors = Enumerable.Range(0, 6).ToList().Shuffle().Take(5).ToArray();
-                var color = Enumerable.Range(0, 6).Where(x => buttonColors.Contains(x)).PickRandom();
+                var color = buttonColors.PickRandom();
                 solution[1].Add(Array.IndexOf(buttonColors, color));
-                Debug.LogFormat("[N&Ns #{0}] \"{1}\" appears in the concatenation of all labels. Press the {2} button.", moduleId, colorNames[color].ToUpperInvariant(), ordinals[Array.IndexOf(buttonColors, color)]);
-                var concat = morseWords[color];
                 tryAgain2:
+                var concat = morseWords[color];
                 while (concat.Length != 25)
                     concat += rnd.Range(0, 2) == 0 ? "M" : "N";
-                concat = Shift(concat, rnd.Range(0, 26 - morseWords[color].Length));
+                concat = Shift(concat, rnd.Range(0, 25 - morseWords[color].Length));
                 if (morseWords.Any(x => concat.Contains(x) && morseWords[color] != x))
                     goto tryAgain2;
                 for (int i = 0; i < 5; i++)
                     labels[i] = new string(concat.Skip(5 * i).Take(5).ToArray());
+                Debug.LogFormat("[N&Ns #{0}] Labels: {1}", moduleId, labels.Join(", "));
+                Debug.LogFormat("[N&Ns #{0}] \"{1}\" appears in the concatenation of all labels. Press the {2} button.", moduleId, colorNames[color].ToUpperInvariant(), ordinals[Array.IndexOf(buttonColors, color)]);
                 break;
             case 2:
                 var base36 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
