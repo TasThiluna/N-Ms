@@ -286,7 +286,7 @@ GameObject:
   - component: {fileID: 114828078503038502}
   - component: {fileID: 114205849229639482}
   - component: {fileID: 114239046379764106}
-  - component: {fileID: 114989096940511332}
+  - component: {fileID: 114839492305393514}
   m_Layer: 0
   m_Name: NandMs
   m_TagString: Untagged
@@ -1442,7 +1442,7 @@ MonoBehaviour:
   audio: {fileID: 114659359768305904}
   bomb: {fileID: 114154092435650982}
   module: {fileID: 114828078503038502}
-  ruleSeedable: {fileID: 114989096940511332}
+  ruleSeedable: {fileID: 114839492305393514}
   textColors:
   - {r: 0.88235295, g: 0, b: 0, a: 1}
   - {r: 0.09948096, g: 0.8455882, b: 0.104626484, a: 1}
@@ -1668,6 +1668,18 @@ MonoBehaviour:
   ModuleType: NandMs
   ModuleDisplayName: N&Ms
   RequiresTimerVisibility: 0
+--- !u!114 &114839492305393514
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1774739114700978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df430f9657844f74a8628e70d980512a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _seed: 1
 --- !u!114 &114863733600168982
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1707,15 +1719,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HighlightScale: {x: 1, y: 1, z: 1}
   OutlineAmount: 0
---- !u!114 &114989096940511332
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1774739114700978}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adf69c2de51bd3c43bbd9bc22578ee08, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _seed: 1
