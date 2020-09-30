@@ -167,7 +167,6 @@ public class NandNs : MonoBehaviour
                 var c2 = pressedButtons.Contains(mButton);
                 var c3 = labels[mButton].Count(c => c == 'N') % 2 == 0;
                 var c4 = mButton % 2 == 0;
-                Debug.LogFormat("C1: {0} C2: {1} C3: {2} c4: {3}", c1, c2, c3, c4);
                 if (c1 && c2 && c3 && c4)
                     solution[3] = new List<int> { 0, 1, 2, 3, 4 };
                 else if (c1 && c2 && c3)
@@ -252,6 +251,7 @@ public class NandNs : MonoBehaviour
         }
         else
         {
+            module.HandleStrike();
             Debug.LogFormat("[N&Ns #{0}] That was incorrect. Strike!", moduleId);
             Debug.LogFormat("[N&Ns #{0}] Resetting...", moduleId);
             stage = 0;

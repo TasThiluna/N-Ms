@@ -16,8 +16,8 @@ MonoBehaviour:
   author: TasThing
   description: "These modules are neither slim nor shady.\r\n\r\nN&Ms idea by Pruz.
     M&Ns, M&Ms ideas by Procyon. N&Ns idea by Procyon and TasThing. All implementations
-    by TasThing.\r\n\r\nManuals HTML:\r\nhttps://ktane.timwi.de/HTML/N%26Ms.html\r\nhttps://ktane.timwi.de/HTML/M%26Ns.html\r\nhttps://ktane.timwi.de/HTML/M%26Ms.html\r\n\r\nManuals
-    PDF:\r\nhttps://ktane.timwi.de/PDF/N%26Ms.pdf\r\nhttps://ktane.timwi.de/PDF/M%26Ns.pdf\r\nhttps://ktane.timwi.de/PDF/M%26Ms.pdf"
+    by TasThing.\r\n\r\nManuals HTML:\r\nhttps://ktane.timwi.de/HTML/N%26Ms.html\r\nhttps://ktane.timwi.de/HTML/M%26Ns.html\r\nhttps://ktane.timwi.de/HTML/M%26Ms.html\r\nhttps://ktane.timwi.de/HTML/N%26Ns.html\r\n\r\nManuals
+    PDF:\r\nhttps://ktane.timwi.de/PDF/N%26Ms.pdf\r\nhttps://ktane.timwi.de/PDF/M%26Ns.pdf\r\nhttps://ktane.timwi.de/PDF/M%26Ms.pdf\r\nhttps://ktane.timwi.de/PDF/N%26Ns.pdf"
   version: 
   outputFolder: build
   previewImage: {fileID: 2800000, guid: f8a8a9446297e9f49bd72f1b519e21b2, type: 3}
