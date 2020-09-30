@@ -173,31 +173,31 @@ public class NandNs : MonoBehaviour
                     solution[3].Add(pressedButtons[0]);
                 else if (c1 && c2 && c4)
                 {
-                    solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 1).Select(x => x.index).ToList();
                     if (!buttonColors.Any(x => x == 1))
                         buttonColors[rnd.Range(0, 5)] = 1;
+                    solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 1).Select(x => x.index).ToList();
                 }
                 else if (c1 && c3 && c4)
                     solution[3].Add(4);
                 else if (c2 && c3 && c4)
                 {
-                    solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 2).Select(x => x.index).ToList();
                     if (!buttonColors.Any(x => x == 2))
                         buttonColors[rnd.Range(0, 5)] = 2;
+                    solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 2).Select(x => x.index).ToList();
                 }
                 else if (c1 && c2)
                     solution[3].Add(pressedButtons[1]);
                 else if (c1 && c3)
                 {
-                    solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 3).Select(x => x.index).ToList();
                     if (!buttonColors.Any(x => x == 3))
                         buttonColors[rnd.Range(0, 5)] = 3;
+                    solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 3).Select(x => x.index).ToList();
                 }
                 else if (c1 && c4)
                 {
-                    solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 5).Select(x => x.index).ToList();
                     if (!buttonColors.Any(x => x == 5))
                         buttonColors[rnd.Range(0, 5)] = 5;
+                    solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 5).Select(x => x.index).ToList();
                 }
                 else if (c2 && c3)
                     solution[3].Add(4);
@@ -205,15 +205,15 @@ public class NandNs : MonoBehaviour
                     solution[3].Add(3);
                 else if (c3 && c4)
                 {
-                    solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 4).Select(x => x.index).ToList();
                     if (!buttonColors.Any(x => x == 4))
                         buttonColors[rnd.Range(0, 5)] = 4;
+                    solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 4).Select(x => x.index).ToList();
                 }
                 else if (c1)
                 {
-                    solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 0).Select(x => x.index).ToList();
                     if (!buttonColors.Any(x => x == 0))
                         buttonColors[rnd.Range(0, 5)] = 0;
+                    solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 0).Select(x => x.index).ToList();
                 }
                 else if (c2)
                     solution[3].Add(1);
@@ -236,7 +236,11 @@ public class NandNs : MonoBehaviour
                 {
                     var base5 = Enumerable.Range(0, 5).Select(x => pressedButtons.Count(xx => xx == x)).Join("");
                     Debug.LogFormat("[N&Ns #{0}] The base-5 number from the pressed buttons is {1}.", moduleId, base5);
-                    var binary = Convert.ToString(base5.Select(x => (int) x - 48).Aggregate(0, (x, y) => x * 5 + y), 2).Substring(0, 5).Replace("0", "M").Replace("1", "N").PadLeft(5, 'M');
+                    var binary = Convert.ToString(base5.Select(x => (int) x - 48).Aggregate(0, (x, y) => x * 5 + y), 2).Replace("0", "M").Replace("1", "N");
+                    if (binary.Length < 5)
+                        binary = binary.PadLeft(5, 'M');
+                    else
+                        binary = binary.Substring(0, 5);
                     var a = rnd.Range(0, 5);
                     tryAgain5:
                     for (int i = 0; i < 5; i++)
