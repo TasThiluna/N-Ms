@@ -172,25 +172,49 @@ public class NandNs : MonoBehaviour
                 else if (c1 && c2 && c3)
                     solution[3].Add(pressedButtons[0]);
                 else if (c1 && c2 && c4)
+                {
                     solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 1).Select(x => x.index).ToList();
+                    if (!buttonColors.Any(x => x == 1))
+                        buttonColors[rnd.Range(0, 5)] = 1;
+                }
                 else if (c1 && c3 && c4)
                     solution[3].Add(4);
                 else if (c2 && c3 && c4)
+                {
                     solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 2).Select(x => x.index).ToList();
+                    if (!buttonColors.Any(x => x == 2))
+                        buttonColors[rnd.Range(0, 5)] = 2;
+                }
                 else if (c1 && c2)
                     solution[3].Add(pressedButtons[1]);
                 else if (c1 && c3)
+                {
                     solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 3).Select(x => x.index).ToList();
+                    if (!buttonColors.Any(x => x == 3))
+                        buttonColors[rnd.Range(0, 5)] = 3;
+                }
                 else if (c1 && c4)
+                {
                     solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 5).Select(x => x.index).ToList();
+                    if (!buttonColors.Any(x => x == 5))
+                        buttonColors[rnd.Range(0, 5)] = 5;
+                }
                 else if (c2 && c3)
                     solution[3].Add(4);
                 else if (c2 && c4)
                     solution[3].Add(3);
                 else if (c3 && c4)
+                {
                     solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 4).Select(x => x.index).ToList();
+                    if (!buttonColors.Any(x => x == 4))
+                        buttonColors[rnd.Range(0, 5)] = 4;
+                }
                 else if (c1)
+                {
                     solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 0).Select(x => x.index).ToList();
+                    if (!buttonColors.Any(x => x == 0))
+                        buttonColors[rnd.Range(0, 5)] = 0;
+                }
                 else if (c2)
                     solution[3].Add(1);
                 else if (c3)
