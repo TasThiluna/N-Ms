@@ -86,7 +86,7 @@ public class NandNs : MonoBehaviour
                 var concat = morseWords[color];
                 while (concat.Length != 25)
                     concat += rnd.Range(0, 2) == 0 ? "M" : "N";
-                concat = Shift(concat, rnd.Range(0, 25 - morseWords[color].Length));
+                concat = Shift(concat, rnd.Range(0, 25 - morseWords[color].Length + 1));
                 if (morseWords.Any(x => concat.Contains(x) && morseWords[color] != x))
                     goto tryAgain2;
                 for (int i = 0; i < 5; i++)
