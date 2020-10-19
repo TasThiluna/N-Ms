@@ -78,21 +78,18 @@ public class NandNs : MonoBehaviour
                 Debug.LogFormat("[N&Ns #{0}] Position {1} has a unique number of N's. Press that button.", moduleId, Array.IndexOf(unique, true) + 1);
                 break;
             case 1:
-                var morseWords = new string[6] { "MNMMNMM", "NNMMNMMMNM", "NNNMNMMNNMNNMM", "NMMMMNMMMMNM", "NMNNMMNMMMNMMNNNMNN", "NMMMMNMNNNMNNNM" };
-                buttonColors = Enumerable.Range(0, 6).ToList().Shuffle().Take(5).ToArray();
-                var color = buttonColors.PickRandom();
-                solution[1].Add(Array.IndexOf(buttonColors, color));
-                tryAgain2:
-                var concat = morseWords[color];
-                while (concat.Length != 25)
-                    concat += rnd.Range(0, 2) == 0 ? "M" : "N";
-                concat = Shift(concat, rnd.Range(0, 25 - morseWords[color].Length + 1));
-                if (morseWords.Any(x => concat.Contains(x) && morseWords[color] != x))
-                    goto tryAgain2;
                 for (int i = 0; i < 5; i++)
-                    labels[i] = new string(concat.Skip(5 * i).Take(5).ToArray());
-                Debug.LogFormat("[N&Ns #{0}] Labels: {1}", moduleId, labels.Join(", "));
-                Debug.LogFormat("[N&Ns #{0}] \"{1}\" appears in the concatenation of all labels. Press the {2} button.", moduleId, colorNames[color].ToUpperInvariant(), ordinals[Array.IndexOf(buttonColors, color)]);
+                    buttonColors[i] = rnd.Range(0, 6);
+                var alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+                var word = new string[] { "ATOM", "BIKE", "CELL", "DASH", "EGAD", "FONT", "GYRO", "HIKE", "ICED", "JACK", "KIND", "LONG", "MOON", "NEWT", "OXEN", "PACK", "QUIZ", "RUST", "STAN", "THAW", "USER", "VAPE", "WEST", "XYST", "YULE", "ZINC" }.PickRandom();
+                Debug.LogFormat("[N&Ns #{0}] The word from the word bank is {1}.", moduleId, word);
+                var extra = alphabet.Where(c => !word.Contains(c)).PickRandom();
+                word += extra;
+                word = new string(word.ToList().Shuffle().ToArray());
+                solution[1].Add(word.IndexOf(extra));
+                Debug.LogFormat("[N&Ns #{0}] The button to press is button {1}.", moduleId, solution[1][0] + 1);
+                for (int i = 0; i < 5; i++)
+                    labels[i] = Convert.ToString(alphabet.IndexOf(word[i]), 2).Replace('0', 'N').Replace('1', 'M').PadLeft(5, 'N');
                 break;
             case 2:
                 var base36 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
