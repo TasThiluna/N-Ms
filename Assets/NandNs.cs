@@ -176,7 +176,7 @@ public class NandNs : MonoBehaviour
                     solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 1).Select(x => x.index).ToList();
                 }
                 else if (c1 && c3 && c4)
-                    solution[3].Add(4);
+                    solution[3].Add(2);
                 else if (c2 && c3 && c4)
                 {
                     if (!buttonColors.Any(x => x == 2))
