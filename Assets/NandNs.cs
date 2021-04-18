@@ -240,11 +240,9 @@ public class NandNs : MonoBehaviour
                     else
                         binary = binary.Substring(0, 5);
                     var a = rnd.Range(0, 5);
-                    tryAgain5:
+                    var decoys = Enumerable.Range(0, 32).Select(x => Convert.ToString(x, 2).PadLeft(5, '0').Replace("0", "M").Replace("1", "N")).Where(x => x != binary);
                     for (int i = 0; i < 5; i++)
-                        labels[i] = a == i ? binary : new string(Enumerable.Repeat("MN", 5).Select(s => s[rnd.Range(0, 2)]).ToArray());
-                    if (labels.Any(s => s == binary && Array.IndexOf(labels, s) != a))
-                        goto tryAgain5;
+                        labels[i] = a == i ? binary : decoys.PickRandom();
                     Debug.LogFormat("[N&Ns #{0}] Converted to binary and taking the first 5 bits, this is {1}. Press the {2} button.", moduleId, binary, ordinals[a]);
                     solution[4].Add(a);
                 }
