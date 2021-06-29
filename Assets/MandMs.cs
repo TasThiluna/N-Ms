@@ -16,6 +16,7 @@ public class MandMs : MonoBehaviour
     public Color[] textColors;
     public KMSelectable[] buttons;
     public TextMesh[] buttonWords;
+    public TextMesh colorblindText;
 
     private bool[] presentGrid = new bool[25];
     private bool[][] grids;
@@ -45,6 +46,7 @@ public class MandMs : MonoBehaviour
         foreach (KMSelectable button in buttons)
             button.OnInteract += delegate () { ButtonPress(button); return false; };
         module.OnActivate += delegate () { StartCoroutine(ShowWords()); };
+        colorblindText.gameObject.SetActive(GetComponent<KMColorblindMode>().ColorblindModeActive);
 
         var rnd = RuleSeedable.GetRNG();
         Debug.LogFormat("[M&Ms #{0}] Using rule seed: {1}.", moduleId, rnd.Seed);
@@ -183,6 +185,7 @@ public class MandMs : MonoBehaviour
 
     IEnumerator ShowWords()
     {
+        colorblindText.text = "";
         if (!firstTime)
         {
             cantPress = true;
@@ -200,6 +203,7 @@ public class MandMs : MonoBehaviour
             {
                 buttonWords[i].text = labels[i];
                 buttonWords[i].color = textColors[buttonColors[i]];
+                colorblindText.text += "RGOBYN"[buttonColors[i]];
                 yield return new WaitForSeconds(.3f);
             }
         }

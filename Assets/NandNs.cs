@@ -18,6 +18,7 @@ public class NandNs : MonoBehaviour
     public TextMesh[] buttonWords;
     public Color brown;
     public Color cyan;
+    public TextMesh colorblindText;
 
     private List<int>[] solution = new List<int>[5];
     private List<int> pressedButtons = new List<int>();
@@ -43,6 +44,7 @@ public class NandNs : MonoBehaviour
         module.OnActivate += delegate () { GenerateStage(); };
         for (int i = 0; i < 5; i++)
             solution[i] = new List<int>();
+        colorblindText.gameObject.SetActive(GetComponent<KMColorblindMode>().ColorblindModeActive);
     }
 
     void GenerateStage()
@@ -292,6 +294,7 @@ public class NandNs : MonoBehaviour
 
     IEnumerator ShowWords(bool hiding)
     {
+        colorblindText.text = "";
         cantPress = true;
         if (hiding && !firstTime)
         {
@@ -309,6 +312,7 @@ public class NandNs : MonoBehaviour
             {
                 buttonWords[i].text = labels[i];
                 buttonWords[i].color = textColors[buttonColors[i]];
+                colorblindText.text += "RGOBYN"[buttonColors[i]];
                 yield return new WaitForSeconds(.3f);
             }
         }

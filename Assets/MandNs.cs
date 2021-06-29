@@ -16,6 +16,7 @@ public class MandNs : MonoBehaviour
     public Color[] textColors;
     public KMSelectable[] buttons;
     public TextMesh[] buttonWords;
+    public TextMesh colorblindText;
 
     private int solution;
     private int[] buttonColors = new int[5];
@@ -46,6 +47,7 @@ public class MandNs : MonoBehaviour
         foreach (KMSelectable button in buttons)
             button.OnInteract += delegate () { ButtonPress(button); return false; };
         module.OnActivate += delegate () { StartCoroutine(ShowWords()); };
+        colorblindText.gameObject.SetActive(GetComponent<KMColorblindMode>().ColorblindModeActive);
     }
 
     void Start()
@@ -139,6 +141,7 @@ public class MandNs : MonoBehaviour
 
     IEnumerator ShowWords()
     {
+        colorblindText.text = "";
         if (!firstTime)
         {
             cantPress = true;
@@ -155,6 +158,7 @@ public class MandNs : MonoBehaviour
             for (int i = 0; i < 5; i++)
             {
                 buttonWords[i].color = textColors[buttonColors[i]];
+                colorblindText.text += "RGOBYN"[buttonColors[i]];
                 buttonWords[i].text = convertedValues[i];
                 yield return new WaitForSeconds(.3f);
             }
