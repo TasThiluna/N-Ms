@@ -58,7 +58,7 @@ public class NandNs : MonoBehaviour
             case 0:
                 tryAgain1:
                 for (int i = 0; i < 5; i++)
-                    labels[i] = new string(Enumerable.Repeat("MN", 5).Select(s => s[rnd.Range(0, 2)]).ToArray());
+                    labels[i] = new string(Enumerable.Repeat("MN", 5).Select(s => s.PickRandom()).ToArray());
                 var counts = new int[5];
                 for (int i = 0; i < 5; i++)
                 {
@@ -101,13 +101,17 @@ public class NandNs : MonoBehaviour
                 for (int i = 0; i < 6; i++)
                     if (i != missingColor)
                         targetSequence += base36.IndexOf(bomb.GetSerialNumber().ElementAt(i)) % 2 == 1 ? "N" : "M";
+                if (targetSequence == "NNNNN")
+                    targetSequence = "NNMNN";
+                if (targetSequence == "MMMMM")
+                    targetSequence = "MMNMM";
                 Debug.LogFormat("[N&Ns #{0}] The missing color is {1}, so ignore the {2} serial number character.", moduleId, colorNames[missingColor], ordinals[missingColor]);
                 Debug.LogFormat("[N&Ns #{0}] The target sequence is {1}.", moduleId, targetSequence);
                 var direction = Array.IndexOf(directionTable, directionTable.First(x => x.Contains(bomb.GetSerialNumber().ElementAt(missingColor)))); // Starts from north, goes clockwise
                 Debug.LogFormat("[N&Ns #{0}] The ignored character is {1}, so go {2}.", moduleId, bomb.GetSerialNumber().ElementAt(missingColor), directionNames[direction]);
                 tryAgain3:
                 for (int i = 0; i < 5; i++)
-                    labels[i] = new string(Enumerable.Repeat("MN", 5).Select(s => s[rnd.Range(0, 2)]).ToArray());
+                    labels[i] = new string(Enumerable.Repeat("MN", 5).Select(s => s.PickRandom()).ToArray());
                 var torus = labels.Reverse().Join("");
                 var startingPos = rnd.Range(0, 25);
                 var curPos = startingPos;
