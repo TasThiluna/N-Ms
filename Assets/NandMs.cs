@@ -98,7 +98,6 @@ public class NandMs : MonoBehaviour
     {
         decidedButtons = Enumerable.Range(0, 5).ToList().Shuffle().Take(4).ToList();
         decidedWords = Enumerable.Range(0, 5).ToList().Shuffle().Take(4).ToList();
-        Debug.LogFormat("[N&Ms #{0}] The correct word to press is {1}.", moduleId, otherWords[otherwordindex]);
         StartCoroutine(ShowWords());
     }
 
@@ -126,6 +125,11 @@ public class NandMs : MonoBehaviour
             }
         }
         recalcing = false;
+        string TempLog = "";
+        for (int i = 0; i < 4; i++)
+          TempLog += buttonWords[i].text + " ";
+        Debug.LogFormat("[N&Ms #{0}] The given texts are {1}.", moduleId, TempLog.Trim());
+        Debug.LogFormat("[N&Ms #{0}] The correct word to press is {1}.", moduleId, otherWords[otherwordindex]);
     }
 
     // Twitch Plays
