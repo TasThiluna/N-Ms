@@ -36,7 +36,7 @@ public class NandNs : MonoBehaviour
     private int moduleId;
     private bool moduleSolved;
 
-    void Awake()
+    private void Awake()
     {
         moduleId = moduleIdCounter++;
         foreach (KMSelectable button in buttons)
@@ -47,8 +47,9 @@ public class NandNs : MonoBehaviour
         colorblindText.gameObject.SetActive(GetComponent<KMColorblindMode>().ColorblindModeActive);
     }
 
-    void GenerateStage()
+    private void GenerateStage()
     {
+        Debug.Log("GINORMOUS PENIS");
         if (stage != 5)
         {
             Debug.LogFormat("[N&Ns #{0}] Stage {1}:", moduleId, stage + 1);
@@ -58,7 +59,7 @@ public class NandNs : MonoBehaviour
         switch (stage)
         {
             case 0:
-                tryAgain1:
+            tryAgain1:
                 for (int i = 0; i < 5; i++)
                     labels[i] = new string(Enumerable.Repeat("MN", 5).Select(s => s.PickRandom()).ToArray());
                 var counts = new int[5];
@@ -111,7 +112,7 @@ public class NandNs : MonoBehaviour
                 Debug.LogFormat("[N&Ns #{0}] The target sequence is {1}.", moduleId, targetSequence);
                 var direction = Array.IndexOf(directionTable, directionTable.First(x => x.Contains(bomb.GetSerialNumber().ElementAt(missingColor)))); // Starts from north, goes clockwise
                 Debug.LogFormat("[N&Ns #{0}] The ignored character is {1}, so go {2}.", moduleId, bomb.GetSerialNumber().ElementAt(missingColor), directionNames[direction]);
-                tryAgain3:
+            tryAgain3:
                 for (int i = 0; i < 5; i++)
                     labels[i] = new string(Enumerable.Repeat("MN", 5).Select(s => s.PickRandom()).ToArray());
                 var torus = labels.Reverse().Join("");
@@ -146,7 +147,7 @@ public class NandNs : MonoBehaviour
             case 3:
                 var mButton = rnd.Range(0, 5);
                 Debug.LogFormat("[N&Ns #{0}] The {1} button is the only one that begins with an M.", moduleId, ordinals[mButton]);
-                tryAgain4:
+            tryAgain4:
                 for (int i = 0; i < 5; i++)
                 {
                     buttonColors[i] = rnd.Range(0, 6);
@@ -177,8 +178,9 @@ public class NandNs : MonoBehaviour
                     solution[3].Add(pressedButtons[0]);
                 else if (c1 && c2 && c4)
                 {
+
                     if (!buttonColors.Any(x => x == 1))
-                        buttonColors[rnd.Range(0, 5)] = 1;
+                        goto tryAgain4;
                     solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 1).Select(x => x.index).ToList();
                 }
                 else if (c1 && c3 && c4)
@@ -186,7 +188,7 @@ public class NandNs : MonoBehaviour
                 else if (c2 && c3 && c4)
                 {
                     if (!buttonColors.Any(x => x == 2))
-                        buttonColors[rnd.Range(0, 5)] = 2;
+                        goto tryAgain4;
                     solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 2).Select(x => x.index).ToList();
                 }
                 else if (c1 && c2)
@@ -194,13 +196,13 @@ public class NandNs : MonoBehaviour
                 else if (c1 && c3)
                 {
                     if (!buttonColors.Any(x => x == 3))
-                        buttonColors[rnd.Range(0, 5)] = 3;
+                        goto tryAgain4;
                     solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 3).Select(x => x.index).ToList();
                 }
                 else if (c1 && c4)
                 {
                     if (!buttonColors.Any(x => x == 5))
-                        buttonColors[rnd.Range(0, 5)] = 5;
+                        goto tryAgain4;
                     solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 5).Select(x => x.index).ToList();
                 }
                 else if (c2 && c3)
@@ -210,13 +212,13 @@ public class NandNs : MonoBehaviour
                 else if (c3 && c4)
                 {
                     if (!buttonColors.Any(x => x == 4))
-                        buttonColors[rnd.Range(0, 5)] = 4;
+                        goto tryAgain4;
                     solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 4).Select(x => x.index).ToList();
                 }
                 else if (c1)
                 {
                     if (!buttonColors.Any(x => x == 0))
-                        buttonColors[rnd.Range(0, 5)] = 0;
+                        goto tryAgain4;
                     solution[3] = buttonColors.Select((x, i) => new { value = x, index = i }).Where(x => x.value == 0).Select(x => x.index).ToList();
                 }
                 else if (c2)
@@ -240,7 +242,7 @@ public class NandNs : MonoBehaviour
                 {
                     var base5 = Enumerable.Range(0, 5).Select(x => pressedButtons.Count(xx => xx == x)).Join("");
                     Debug.LogFormat("[N&Ns #{0}] The base-5 number from the pressed buttons is {1}.", moduleId, base5);
-                    var binary = Convert.ToString(base5.Select(x => (int) x - 48).Aggregate(0, (x, y) => x * 5 + y), 2).Replace("0", "M").Replace("1", "N");
+                    var binary = Convert.ToString(base5.Select(x => (int)x - 48).Aggregate(0, (x, y) => x * 5 + y), 2).Replace("0", "M").Replace("1", "N");
                     if (binary.Length < 5)
                         binary = binary.PadLeft(5, 'M');
                     else
@@ -265,7 +267,7 @@ public class NandNs : MonoBehaviour
         StartCoroutine(ShowWords(true));
     }
 
-    void ButtonPress(KMSelectable button)
+    private void ButtonPress(KMSelectable button)
     {
         audio.PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, button.transform);
         button.AddInteractionPunch(.5f);
@@ -292,7 +294,7 @@ public class NandNs : MonoBehaviour
         GenerateStage();
     }
 
-    IEnumerator ShowWords(bool hiding)
+    private IEnumerator ShowWords(bool hiding)
     {
         colorblindText.text = "";
         cantPress = true;
@@ -319,12 +321,12 @@ public class NandNs : MonoBehaviour
         cantPress = false;
     }
 
-    static string Shift(string str, int i)
+    private static string Shift(string str, int i)
     {
         return str.Substring(str.Length - i) + str.Substring(0, str.Length - i);
     }
 
-    static int Process(int i, int direction)
+    private static int Process(int i, int direction)
     {
         var x = i % 5;
         var y = i / 5;
@@ -363,11 +365,11 @@ public class NandNs : MonoBehaviour
     }
 
     // Twitch Plays
-    #pragma warning disable 414
+#pragma warning disable 414
     private readonly string TwitchHelpMessage = @"!{0} press <1/2/3/4/5> [Presses the button in that position from left to right.]";
-    #pragma warning restore 414
+#pragma warning restore 414
 
-    KMSelectable[] ProcessTwitchCommand(string command)
+    private KMSelectable[] ProcessTwitchCommand(string command)
     {
         Match m;
         if ((m = Regex.Match(command, @"^\s*(?:press\s+)?([1-5])$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant)).Success)
@@ -375,7 +377,7 @@ public class NandNs : MonoBehaviour
         return null;
     }
 
-    IEnumerator TwitchHandleForcedSolve()
+    private IEnumerator TwitchHandleForcedSolve()
     {
         while (!moduleSolved)
         {
