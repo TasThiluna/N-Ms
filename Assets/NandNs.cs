@@ -49,7 +49,6 @@ public class NandNs : MonoBehaviour
 
     private void GenerateStage()
     {
-        Debug.Log("GINORMOUS PENIS");
         if (stage != 5)
         {
             Debug.LogFormat("[N&Ns #{0}] Stage {1}:", moduleId, stage + 1);
@@ -100,6 +99,8 @@ public class NandNs : MonoBehaviour
                 var directionNames = new string[8] { "north", "northeast", "east", "southeast", "south", "southwest", "west", "northwest" };
                 buttonColors = Enumerable.Range(0, 6).ToList().Shuffle().Take(5).ToArray();
                 var missingColor = Enumerable.Range(0, 6).First(x => !buttonColors.Contains(x));
+                Debug.Log(buttonColors.Join(", "));
+                Debug.Log(missingColor.ToString());
                 var targetSequence = "";
                 for (int i = 0; i < 6; i++)
                     if (i != missingColor)
